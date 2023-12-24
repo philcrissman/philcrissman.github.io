@@ -1,29 +1,20 @@
 ---
 layout: post
-title:  "Welcome to Jekyll!"
+title:  "Hi this is a post"
 date:   2023-12-24 10:21:49 -0800
-categories: jekyll update
+categories: blog
 ---
-You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
 
-Jekyll requires blog post files to be named according to the following format:
+Hi. This is a first post.
 
-`YEAR-MONTH-DAY-title.MARKUP`
+I keep thinking I'll start writing, and I keep putting it off. I'm going to give it a go here.
 
-Where `YEAR` is a four-digit number, `MONTH` and `DAY` are both two-digit numbers, and `MARKUP` is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+In the last few days I've been re-reading the first chapter of [Elements of Programming](http://elementsofprogramming.com) by Alexander Stepanov and Paul McJones. This book is (I think) pretty well known in C++ circles, but I'm not sure it's well known _outside_ those circles.
 
-Jekyll also offers powerful support for code snippets:
+Alexander Stepanov was an early advocate of [generic programming](https://en.wikipedia.org/wiki/Generic_programming) and was the primary designer and implmenter of the C++ Standard Template Library.
 
-{% highlight ruby %}
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
-{% endhighlight %}
+Anyways... the books is pretty dense, and latter parts are not necessarily that easy to get through. I've usually dropped off at some point in the third chapter in previous attempts to read through it.
 
-Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
+The first chapter, called "Foundations" is a great overview of basic, foundational ideas in computer programming. Even if you only ever read the first chapter, I think it's valuable, and I highly recommend it.
 
-[jekyll-docs]: https://jekyllrb.com/docs/home
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-talk]: https://talk.jekyllrb.com/
+All right; happy holidays!
