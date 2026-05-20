@@ -143,6 +143,15 @@
   }
   @media (max-width: 600px) { .footnote { columns: 1; } }
 
+  .back-link {
+    max-width: 800px; margin: 0 auto 1.6rem; display: block;
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none;
+    border-bottom: none;
+  }
+  .back-link:hover { color: var(--rust); }
+
   a.ext {
     color: inherit; text-decoration: none;
     border-bottom: 1px dotted currentColor;
@@ -156,6 +165,8 @@
 </style>
 </head>
 <body>
+
+<a class="back-link" href="index.html">← index</a>
 
 <div class="masthead">
   <div class="kicker">Self-Study Curriculum · Programming Languages &amp; Type Theory</div>
