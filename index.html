@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>philcrissman.github.io</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap');
+
+  :root {
+    --ink: #1a1714;
+    --paper: #f5f0e8;
+    --aged: #e3dcc8;
+    --rust: #8b3a1e;
+    --slate: #3d4a5c;
+    --gold: #9a7010;
+    --muted: #7a7060;
+    --light-rule: #d5cdb8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.75;
+    padding: 2.5rem 1.2rem 5rem;
+  }
+
+  .masthead { max-width: 800px; margin: 0 auto 0.5rem; }
+  .masthead .kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 0.6rem;
+  }
+  .masthead h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.9rem, 4.5vw, 2.9rem);
+    font-weight: 700; line-height: 1.1; letter-spacing: -0.015em; margin-bottom: 0.4rem;
+  }
+  .masthead .byline { font-size: 0.82rem; color: var(--muted); font-style: italic; margin-bottom: 1.4rem; }
+  .masthead hr { border: none; border-top: 2px solid var(--ink); }
+
+  .intro {
+    max-width: 800px; margin: 1.6rem auto 0.6rem;
+    font-size: 0.9rem; color: var(--slate); columns: 2; column-gap: 2.5rem;
+  }
+  .intro p { margin-bottom: 0.7rem; }
+  @media (max-width: 600px) { .intro { columns: 1; } }
+
+  .legend {
+    max-width: 800px; margin: 1.4rem auto 2.4rem;
+    display: flex; flex-wrap: wrap; gap: 0.5rem 1.2rem;
+    font-size: 0.78rem; color: var(--muted);
+    border-top: 1px solid var(--light-rule); padding-top: 0.8rem;
+  }
+  .tag {
+    display: inline-block; font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem; letter-spacing: 0.07em;
+    padding: 0.1em 0.45em; border-radius: 2px; text-transform: uppercase; vertical-align: middle;
+  }
+  .tag-core  { background: #d6e8d6; color: #1e4a1e; }
+  .tag-math  { background: #ddd8ee; color: #2e245c; }
+  .tag-impl  { background: #edddd8; color: #4a2010; }
+  .tag-paper { background: #d8e6ee; color: #10304a; }
+  .tag-adv   { background: #eed8e8; color: #4a1038; }
+  .tag-gap   { background: #eee8c8; color: #4a3808; }
+
+  .phase { max-width: 800px; margin: 0 auto 3.2rem; }
+  .phase-header {
+    display: grid; grid-template-columns: 3rem 1fr;
+    gap: 0 0.8rem; align-items: start;
+    margin-bottom: 0.9rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--ink);
+  }
+  .phase-num {
+    font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 700;
+    color: var(--light-rule); line-height: 1; padding-top: 0.15rem; user-select: none;
+  }
+  .phase-label {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted);
+  }
+  .phase-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; line-height: 1.2; }
+  .phase-desc { grid-column: 2; font-size: 0.84rem; color: var(--muted); font-style: italic; margin-top: 0.2rem; }
+
+  .sec {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.63rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin: 1.1rem 0 0.45rem;
+  }
+
+  .books { list-style: none; }
+  .books li {
+    padding: 0.55rem 0; border-bottom: 1px dotted var(--light-rule);
+    font-size: 0.88rem; display: grid; grid-template-columns: 1fr auto;
+    gap: 0.3rem 0.8rem; align-items: baseline;
+  }
+  .books li:last-child { border-bottom: none; }
+  .book-title { font-style: italic; }
+  .book-author { color: var(--muted); font-size: 0.82rem; }
+  .book-note {
+    grid-column: 1 / -1; font-size: 0.78rem; color: var(--rust); font-style: italic;
+    padding-left: 0.6rem; border-left: 2px solid var(--aged); margin-top: 0.1rem;
+  }
+
+  .papers { list-style: none; }
+  .papers li {
+    padding: 0.4rem 0; border-bottom: 1px dotted var(--light-rule);
+    font-size: 0.84rem; color: var(--slate);
+  }
+  .papers li:last-child { border-bottom: none; }
+  .paper-title { color: var(--ink); font-weight: 400; }
+
+  .projects-box { background: var(--aged); padding: 0.9rem 1.1rem; margin-top: 0.9rem; border-radius: 1px; }
+  .projects-box .sec { margin-top: 0; }
+  .projects { list-style: none; }
+  .projects li {
+    font-size: 0.86rem; padding: 0.28rem 0; padding-left: 1.2rem;
+    position: relative; color: var(--slate);
+  }
+  .projects li::before {
+    content: '→'; position: absolute; left: 0;
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--muted); top: 0.35rem;
+  }
+
+  .gap {
+    max-width: 800px; margin: 0 auto 2rem;
+    border: 1px solid #c8b870; border-left: 4px solid var(--gold);
+    background: #fdf8ec; padding: 1rem 1.2rem; border-radius: 1px;
+  }
+  .gap .sec { color: var(--gold); margin-top: 0; }
+  .gap p { font-size: 0.86rem; color: var(--slate); margin-bottom: 0.45rem; }
+  .gap p:last-child { margin-bottom: 0; }
+  .gap strong { color: var(--ink); font-weight: 500; }
+
+  hr.rule { max-width: 800px; margin: 2rem auto; border: none; border-top: 1px solid var(--light-rule); }
+
+  .footnote {
+    max-width: 800px; margin: 2.5rem auto 0; font-size: 0.78rem; color: var(--muted);
+    border-top: 1px solid var(--light-rule); padding-top: 1rem; font-style: italic;
+    columns: 2; column-gap: 2.5rem;
+  }
+  @media (max-width: 600px) { .footnote { columns: 1; } }
+</style>
+
+<style>
+  .index-list { list-style: none; max-width: 800px; margin: 2rem auto 0; }
+  .index-list li {
+    padding: 1.2rem 0;
+    border-bottom: 1px dotted var(--light-rule);
+  }
+  .index-list li:last-child { border-bottom: none; }
+  .index-list h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem; font-weight: 700; line-height: 1.2;
+    margin-bottom: 0.2rem;
+  }
+  .index-list h3 a {
+    color: var(--ink); text-decoration: none;
+    border-bottom: 1px solid var(--light-rule);
+    transition: border-color 0.15s;
+  }
+  .index-list h3 a:hover { border-color: var(--rust); color: var(--rust); }
+  .index-list .page-desc { font-size: 0.84rem; color: var(--muted); font-style: italic; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="kicker">philcrissman.github.io</div>
+  <h1>Phil Crissman</h1>
+  <div class="byline">Notes, curricula, and miscellany.</div>
+  <hr>
+</div>
+
+<div class="intro">
+  <p>A small collection of pages. No particular theme, no particular schedule — just things that seemed worth writing down.</p>
+</div>
+
+<ul class="index-list">
+  <li>
+    <h3><a href="pl-curriculum.html">A Graduate-Equivalent Program in PL Theory &amp; Implementation</a></h3>
+    <p class="page-desc">A six-phase self-study curriculum covering lambda calculus, type theory, proof theory, denotational semantics, and category theory — for a working engineer returning to academic mathematics.</p>
+  </li>
+</ul>
+
+</body>
+</html>

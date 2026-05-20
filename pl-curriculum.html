@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PL Theory Self-Study Curriculum</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap');
+
+  :root {
+    --ink: #1a1714;
+    --paper: #f5f0e8;
+    --aged: #e3dcc8;
+    --rust: #8b3a1e;
+    --slate: #3d4a5c;
+    --gold: #9a7010;
+    --muted: #7a7060;
+    --light-rule: #d5cdb8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.75;
+    padding: 2.5rem 1.2rem 5rem;
+  }
+
+  .masthead { max-width: 800px; margin: 0 auto 0.5rem; }
+  .masthead .kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 0.6rem;
+  }
+  .masthead h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.9rem, 4.5vw, 2.9rem);
+    font-weight: 700; line-height: 1.1; letter-spacing: -0.015em; margin-bottom: 0.4rem;
+  }
+  .masthead .byline { font-size: 0.82rem; color: var(--muted); font-style: italic; margin-bottom: 1.4rem; }
+  .masthead hr { border: none; border-top: 2px solid var(--ink); }
+
+  .intro {
+    max-width: 800px; margin: 1.6rem auto 0.6rem;
+    font-size: 0.9rem; color: var(--slate); columns: 2; column-gap: 2.5rem;
+  }
+  .intro p { margin-bottom: 0.7rem; }
+  @media (max-width: 600px) { .intro { columns: 1; } }
+
+  .legend {
+    max-width: 800px; margin: 1.4rem auto 2.4rem;
+    display: flex; flex-wrap: wrap; gap: 0.5rem 1.2rem;
+    font-size: 0.78rem; color: var(--muted);
+    border-top: 1px solid var(--light-rule); padding-top: 0.8rem;
+  }
+  .tag {
+    display: inline-block; font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem; letter-spacing: 0.07em;
+    padding: 0.1em 0.45em; border-radius: 2px; text-transform: uppercase; vertical-align: middle;
+  }
+  .tag-core  { background: #d6e8d6; color: #1e4a1e; }
+  .tag-math  { background: #ddd8ee; color: #2e245c; }
+  .tag-impl  { background: #edddd8; color: #4a2010; }
+  .tag-paper { background: #d8e6ee; color: #10304a; }
+  .tag-adv   { background: #eed8e8; color: #4a1038; }
+  .tag-gap   { background: #eee8c8; color: #4a3808; }
+
+  .phase { max-width: 800px; margin: 0 auto 3.2rem; }
+  .phase-header {
+    display: grid; grid-template-columns: 3rem 1fr;
+    gap: 0 0.8rem; align-items: start;
+    margin-bottom: 0.9rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--ink);
+  }
+  .phase-num {
+    font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 700;
+    color: var(--light-rule); line-height: 1; padding-top: 0.15rem; user-select: none;
+  }
+  .phase-label {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted);
+  }
+  .phase-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; line-height: 1.2; }
+  .phase-desc { grid-column: 2; font-size: 0.84rem; color: var(--muted); font-style: italic; margin-top: 0.2rem; }
+
+  .sec {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.63rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin: 1.1rem 0 0.45rem;
+  }
+
+  .books { list-style: none; }
+  .books li {
+    padding: 0.55rem 0; border-bottom: 1px dotted var(--light-rule);
+    font-size: 0.88rem; display: grid; grid-template-columns: 1fr auto;
+    gap: 0.3rem 0.8rem; align-items: baseline;
+  }
+  .books li:last-child { border-bottom: none; }
+  .book-title { font-style: italic; }
+  .book-author { color: var(--muted); font-size: 0.82rem; }
+  .book-note {
+    grid-column: 1 / -1; font-size: 0.78rem; color: var(--rust); font-style: italic;
+    padding-left: 0.6rem; border-left: 2px solid var(--aged); margin-top: 0.1rem;
+  }
+
+  .papers { list-style: none; }
+  .papers li {
+    padding: 0.4rem 0; border-bottom: 1px dotted var(--light-rule);
+    font-size: 0.84rem; color: var(--slate);
+  }
+  .papers li:last-child { border-bottom: none; }
+  .paper-title { color: var(--ink); font-weight: 400; }
+
+  .projects-box { background: var(--aged); padding: 0.9rem 1.1rem; margin-top: 0.9rem; border-radius: 1px; }
+  .projects-box .sec { margin-top: 0; }
+  .projects { list-style: none; }
+  .projects li {
+    font-size: 0.86rem; padding: 0.28rem 0; padding-left: 1.2rem;
+    position: relative; color: var(--slate);
+  }
+  .projects li::before {
+    content: '→'; position: absolute; left: 0;
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--muted); top: 0.35rem;
+  }
+
+  .gap {
+    max-width: 800px; margin: 0 auto 2rem;
+    border: 1px solid #c8b870; border-left: 4px solid var(--gold);
+    background: #fdf8ec; padding: 1rem 1.2rem; border-radius: 1px;
+  }
+  .gap .sec { color: var(--gold); margin-top: 0; }
+  .gap p { font-size: 0.86rem; color: var(--slate); margin-bottom: 0.45rem; }
+  .gap p:last-child { margin-bottom: 0; }
+  .gap strong { color: var(--ink); font-weight: 500; }
+
+  hr.rule { max-width: 800px; margin: 2rem auto; border: none; border-top: 1px solid var(--light-rule); }
+
+  .footnote {
+    max-width: 800px; margin: 2.5rem auto 0; font-size: 0.78rem; color: var(--muted);
+    border-top: 1px solid var(--light-rule); padding-top: 1rem; font-style: italic;
+    columns: 2; column-gap: 2.5rem;
+  }
+  @media (max-width: 600px) { .footnote { columns: 1; } }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="kicker">Self-Study Curriculum · Programming Languages &amp; Type Theory</div>
+  <h1>A Graduate-Equivalent Program<br>in PL Theory &amp; Implementation</h1>
+  <div class="byline">For a working engineer with a CS degree, functional programming exposure, and serious intent. Calibrated for someone returning to academic mathematics after time away.</div>
+  <hr>
+</div>
+
+<div class="intro">
+  <p>Six phases, roughly sequential, with permeable boundaries. Phase I addresses the mathematical proof-writing machinery that tends to atrophy with time away from it — and that a 2009 CS degree likely underemphasized regardless. Phases II–IV cover the classical core of PL theory. Phases V–VI reach toward the research frontier.</p>
+  <p>Each phase contains required books, papers to read (not merely know about), and implementation projects. Projects are the connective tissue — the place where reading becomes understanding. A committed part-time reader should expect three to five years for the full program. Gap boxes identify topics that self-study programs commonly miss entirely.</p>
+</div>
+
+<div class="legend">
+  <span><span class="tag tag-core">core</span> do not skip</span>
+  <span><span class="tag tag-math">math</span> mathematical background</span>
+  <span><span class="tag tag-impl">impl</span> implementation focus</span>
+  <span><span class="tag tag-paper">paper</span> landmark paper</span>
+  <span><span class="tag tag-adv">advanced</span> graduate frontier</span>
+  <span><span class="tag tag-gap">gap</span> commonly missed</span>
+</div>
+
+
+<!-- PHASE I -->
+<div class="phase">
+  <div class="phase-header">
+    <div class="phase-num">I</div>
+    <div class="phase-meta">
+      <div class="phase-label">Phase One</div>
+      <div class="phase-title">Mathematical Foundations &amp; Proof</div>
+      <div class="phase-desc">The proof-writing reflex atrophies without use. Everything downstream — induction over terms, subject reduction proofs, normalization arguments — requires fluency here. Do not rush past this phase.</div>
+    </div>
+  </div>
+
+  <div class="sec">Books</div>
+  <ul class="books">
+    <li>
+      <span><span class="book-title">How to Prove It</span> <span class="book-author">— Daniel Velleman</span> <span class="tag tag-core">core</span></span>
+      <div class="book-note">The right starting point: logic, sets, relations, functions, mathematical induction. Do the exercises. The chapters on relations and functions are the ones that matter most for what follows.</div>
+    </li>
+    <li>
+      <span><span class="book-title">Naive Set Theory</span> <span class="book-author">— Paul Halmos</span> <span class="tag tag-math">math</span></span>
+      <div class="book-note">Spare and beautiful. Read alongside Velleman rather than after. Ordinals and cardinals appear later in domain theory and denotational semantics; better to meet them here first.</div>
+    </li>
+    <li>
+      <span><span class="book-title">Book of Proof</span> <span class="book-author">— Richard Hammack</span> <span class="tag tag-math">math</span></span>
+      <div class="book-note">Free PDF. A good supplement to Velleman; stronger on combinatorics and graph-flavored proofs. Use selectively rather than cover-to-cover.</div>
+    </li>
+    <li>
+      <span><span class="book-title">Logic in Computer Science</span> <span class="book-author">— Huth &amp; Ryan</span> <span class="tag tag-core">core</span></span>
+      <div class="book-note">Propositional and predicate logic, natural deduction, temporal logic, model checking. Fills a gap most CS degrees leave. The natural deduction treatment here directly prepares for Curry-Howard.</div>
+    </li>
+    <li>
+      <span><span class="book-title">Concrete Mathematics</span> <span class="book-author">— Graham, Knuth &amp; Patashnik</span> <span class="tag tag-math">math</span></span>
+      <div class="book-note">Not required early, but invaluable for combinatorial reasoning and summation manipulation. Return to it as needed throughout the program.</div>
+    </li>
+  </ul>
+
+  <div class="sec">Papers &amp; Essays</div>
+  <ul class="papers">
+    <li><span class="paper-title">"Notation as a Tool of Thought"</span> — Kenneth Iverson, 1979 Turing Lecture <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"Why Functional Programming Matters"</span> — John Hughes, 1990 <span class="tag tag-paper">paper</span></li>
+  </ul>
+
+  <div class="projects-box">
+    <div class="sec">Exercises</div>
+    <ul class="projects">
+      <li>Complete all exercises in Velleman Chapters 1–6; do not skip the relation and function chapters</li>
+      <li>Work through the natural deduction proof trees in Huth &amp; Ryan Chapter 1 by hand, on paper</li>
+      <li>Write informal proofs of basic set-theoretic identities (De Morgan, distributivity) in your own words before consulting any reference</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- PHASE II -->
+<div class="phase">
+  <div class="phase-header">
+    <div class="phase-num">II</div>
+    <div class="phase-meta">
+      <div class="phase-label">Phase Two</div>
+      <div class="phase-title">Lambda Calculus &amp; Functional Programming Foundations</div>
+      <div class="phase-desc">The untyped lambda calculus is the atom from which PL theory is built. This phase establishes it rigorously and develops the Haskell fluency needed for everything that follows.</div>
+    </div>
+  </div>
+
+  <div class="sec">Books</div>
+  <ul class="books">
+    <li>
+      <span><span class="book-title">An Introduction to Functional Programming through Lambda Calculus</span> <span class="book-author">— Greg Michaelson</span> <span class="tag tag-core">core</span></span>
+      <div class="book-note">Underrated. Builds lambda calculus from scratch with an implementation thread throughout. An ideal bridge between prior Scheme exposure and formal theory.</div>
+    </li>
+    <li>
+      <span><span class="book-title">Programming in Haskell</span> <span class="book-author">— Graham Hutton</span> <span class="tag tag-core">core</span></span>
+      <div class="book-note">The right way to learn Haskell for someone doing PL theory. Concise, mathematically honest. Complete it before moving to Phase III.</div>
+    </li>
+    <li>
+      <span><span class="book-title">The Haskell Road to Logic, Maths and Programming</span> <span class="book-author">— Doets &amp; van Eijck</span> <span class="tag tag-math">math</span></span>
+      <div class="book-note">Covers Phase I topics through Haskell — sets, relations, induction, number theory. A valuable second pass once Hutton is done; reinforces both mathematical and Haskell fluency simultaneously.</div>
+    </li>
+    <li>
+      <span><span class="book-title">Structure and Interpretation of Computer Programs</span> <span class="book-author">— Abelson &amp; Sussman</span> <span class="tag tag-impl">impl</span></span>
+      <div class="book-note">If prior Scheme exposure was shallow, SICP deepens it. Chapters 4–5 (metacircular evaluator, register machine) are directly relevant to interpreter implementation.</div>
+    </li>
+    <li>
+      <span><span class="book-title">The Lambda Calculus: Its Syntax and Semantics</span> <span class="book-author">— H.P. Barendregt</span> <span class="tag tag-adv">advanced</span></span>
+      <div class="book-note">The definitive reference. Not a cover-to-cover read at this stage — use it for Church-Rosser, normal forms, and combinatory logic. Return repeatedly throughout the program.</div>
+    </li>
+  </ul>
+
+  <div class="sec">Papers</div>
+  <ul class="papers">
+    <li><span class="paper-title">"Recursive Functions of Symbolic Expressions and Their Computation by Machine"</span> — John McCarthy, 1960 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"Can Programming Be Liberated from the Von Neumann Style?"</span> — John Backus, 1978 Turing Lecture <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"The Mechanical Evaluation of Expressions"</span> — Peter Landin, 1964 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"The Next 700 Programming Languages"</span> — Peter Landin, 1966 <span class="tag tag-paper">paper</span></li>
+  </ul>
+
+  <div class="projects-box">
+    <div class="sec">Projects</div>
+    <ul class="projects">
+      <li>Implement an untyped lambda calculus interpreter with β-reduction and normal-order evaluation</li>
+      <li>Add Church encoding of booleans, naturals, and pairs; verify they compute correctly</li>
+      <li>Implement SKI combinator translation and verify that translated terms reduce to the same normal forms</li>
+      <li>Complete Hutton's exercises throughout; implement his expression evaluator and parser from scratch</li>
+      <li>Work through SICP Chapter 4 (metacircular evaluator) selectively</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- PHASE III -->
+<div class="phase">
+  <div class="phase-header">
+    <div class="phase-num">III</div>
+    <div class="phase-meta">
+      <div class="phase-label">Phase Three</div>
+      <div class="phase-title">Type Theory: The Classical Core</div>
+      <div class="phase-desc">TAPL is the central text of this phase and of the entire curriculum. Simple types, subtyping, System F, references, exceptions, recursive types. This phase takes as long as it takes.</div>
+    </div>
+  </div>
+
+  <div class="sec">Books</div>
+  <ul class="books">
+    <li>
+      <span><span class="book-title">Types and Programming Languages</span> <span class="book-author">— Benjamin Pierce</span> <span class="tag tag-core">core</span></span>
+      <div class="book-note">The central text of the curriculum. Read in full; work the exercises; implement the systems. The OCaml implementations in the book's artifact are worth running and modifying. Rewards multiple readings.</div>
+    </li>
+    <li>
+      <span><span class="book-title">Practical Foundations for Programming Languages</span> <span class="book-author">— Robert Harper</span> <span class="tag tag-core">core</span></span>
+      <div class="book-note">Free PDF from CMU. Harper's approach is distinct from Pierce's and essential as a second voice. His treatment of statics and dynamics is unusually clear; the abstract binding tree framework is worth knowing.</div>
+    </li>
+    <li>
+      <span><span class="book-title">Advanced Topics in Types and Programming Languages</span> <span class="book-author">— Pierce (ed.)</span> <span class="tag tag-core">core</span></span>
+      <div class="book-note">Edited volume covering effect types, dependent types, substructural types, and more. Read selectively alongside Phases IV–V; not a linear read. The Walker chapter on substructural types is essential.</div>
+    </li>
+  </ul>
+
+  <div class="sec">Papers</div>
+  <ul class="papers">
+    <li><span class="paper-title">"A Formulation of the Simple Theory of Types"</span> — Alonzo Church, 1940 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"The Principal Type-Scheme of an Object in Combinatory Logic"</span> — Hindley, 1969 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"A Theory of Type Polymorphism in Programming"</span> — Robin Milner, 1978 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"Principal Type-Schemes for Functional Programs"</span> — Damas &amp; Milner, 1982 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"Towards a Theory of Type Structure"</span> — John Reynolds, 1974 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"Types, Abstraction and Parametric Polymorphism"</span> — John Reynolds, 1983 — parametricity <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"Theorems for Free!"</span> — Philip Wadler, 1989 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"How to Make ad-hoc Polymorphism Less ad-hoc"</span> — Wadler &amp; Blott, 1989 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"The Essence of Functional Programming"</span> — Wadler, 1992 — introduces monads to FP <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"Monads for Functional Programming"</span> — Wadler, 1995 <span class="tag tag-paper">paper</span></li>
+  </ul>
+
+  <div class="projects-box">
+    <div class="sec">Projects</div>
+    <ul class="projects">
+      <li>Implement simply typed lambda calculus with type checking and small-step operational semantics</li>
+      <li>Extend with product types, sum types, and unit; write out progress and preservation proofs informally</li>
+      <li>Implement Algorithm W (Hindley-Milner type inference) from scratch — this is a milestone</li>
+      <li>Implement a small language with let-polymorphism; test with examples requiring generalization</li>
+      <li>Implement System F with Church-style type annotations</li>
+      <li>Implement one of the TAPL artifact systems (fullsimple, fullpoly, or fullref) and extend it with a feature of your own</li>
+    </ul>
+  </div>
+</div>
+
+<!-- GAP: Operational Semantics -->
+<div class="gap">
+  <div class="sec"><span class="tag tag-gap">gap</span> &nbsp; Formal Operational Semantics &amp; Structural Proof Methods</div>
+  <p>Many self-study programs in type theory underemphasize the mechanics of formal operational semantics and the structural proof style used in PL papers. Progress and preservation, strong normalization, confluence — these are not just topics to read about; they are proof techniques to practice.</p>
+  <p><strong>The Formal Semantics of Programming Languages</strong> (Winskel) covers this, and belongs here as a companion to TAPL. Its exercises on relations and structural induction are exactly the ones that feel hard until they don't. This book also introduces denotational semantics and domain theory, making it a bridge to Phase V.</p>
+  <p><strong>Semantics of Programming Languages</strong> (Gunter) is complementary to Winskel with stronger domain theory coverage. Optional but valuable for someone who wants that depth earlier.</p>
+</div>
+
+
+<!-- PHASE IV -->
+<div class="phase">
+  <div class="phase-header">
+    <div class="phase-num">IV</div>
+    <div class="phase-meta">
+      <div class="phase-label">Phase Four</div>
+      <div class="phase-title">Proof Theory, Curry-Howard, &amp; Dependent Types</div>
+      <div class="phase-desc">The Curry-Howard correspondence is the intellectual center of gravity of the entire field. This phase builds toward it from the proof theory side and introduces dependent types as its natural extension.</div>
+    </div>
+  </div>
+
+  <div class="sec">Books</div>
+  <ul class="books">
+    <li>
+      <span><span class="book-title">Programming Language Foundations in Agda</span> <span class="book-author">— Philip Wadler et al.</span> <span class="tag tag-core">core</span></span>
+      <div class="book-note">Free online. Teaches TAPL-style PL theory through dependent type proofs in Agda. Covers Curry-Howard directly. The PL framing makes it the right place to encounter dependent types for someone coming from TAPL.</div>
+    </li>
+    <li>
+      <span><span class="book-title">Lectures on the Curry-Howard Isomorphism</span> <span class="book-author">— Sørensen &amp; Urzyczyn</span> <span class="tag tag-core">core</span></span>
+      <div class="book-note">The book dedicated entirely to this topic. Goes from simple types through System F through second-order logic. Technically demanding; uniquely focused.</div>
+    </li>
+    <li>
+      <span><span class="book-title">Basic Proof Theory</span> <span class="book-author">— Troelstra &amp; Schwichtenberg</span> <span class="tag tag-math">math</span></span>
+      <div class="book-note">Natural deduction, sequent calculus, cut elimination (Gentzen's Hauptsatz), normalization. This is where Gentzen's work lives in textbook form. Dense; work through it slowly.</div>
+    </li>
+    <li>
+      <span><span class="book-title">Type Theory and Formal Proof: An Introduction</span> <span class="book-author">— Nederpelt &amp; Geuvers</span> <span class="tag tag-math">math</span></span>
+      <div class="book-note">Covers the Lambda Cube (Barendregt's classification of type systems) systematically. Good on the pure type systems framework. More accessible than Barendregt's full treatment.</div>
+    </li>
+    <li>
+      <span><span class="book-title">Proofs and Fundamentals</span> <span class="book-author">— Ethan Bloch</span> <span class="tag tag-math">math</span></span>
+      <div class="book-note">If proof fluency is still unsteady after Phase I, this is the most thorough remediation available. Particularly strong on mathematical induction and its structural variants.</div>
+    </li>
+  </ul>
+
+  <div class="sec">Papers</div>
+  <ul class="papers">
+    <li><span class="paper-title">"Propositions as Types"</span> — Philip Wadler, 2015 — the essential historical survey <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"The formulae-as-types notion of construction"</span> — William Howard, circulated 1969, published 1980 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"An intuitionistic theory of types"</span> — Per Martin-Löf, 1975 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"Untersuchungen über das logische Schließen"</span> — Gerhard Gentzen, 1935 — read in translation <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"On formally undecidable propositions of Principia Mathematica"</span> — Gödel, 1931 — read a good translation with commentary <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"A tutorial implementation of a dependently typed lambda calculus"</span> — Löh, McBride &amp; Swierstra, 2010 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"Bidirectional Typing"</span> — Dunfield &amp; Krishnaswami, 2021 — survey of bidirectional type checking <span class="tag tag-paper">paper</span></li>
+  </ul>
+
+  <div class="projects-box">
+    <div class="sec">Projects</div>
+    <ul class="projects">
+      <li>Work through PLFA Parts I and II in full, completing all exercises in Agda</li>
+      <li>Implement a bidirectional type checker for STLC — this is the practical technique underlying real type checkers</li>
+      <li>Implement LambdaPi (from Löh, McBride, Swierstra) — a minimal dependently typed language</li>
+      <li>Prove progress and preservation for STLC in Agda</li>
+      <li>Formalize at least one result from earlier phases in Agda — e.g., commutativity of addition on Peano naturals, or a property of your earlier lambda calculus implementation</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- PHASE V -->
+<div class="phase">
+  <div class="phase-header">
+    <div class="phase-num">V</div>
+    <div class="phase-meta">
+      <div class="phase-label">Phase Five</div>
+      <div class="phase-title">Semantics, Domains, &amp; Category Theory</div>
+      <div class="phase-desc">Denotational semantics, domain theory, and category theory give a mathematical language for talking about meaning rather than reduction. Scott, Plotkin, Moggi, and Reynolds live here.</div>
+    </div>
+  </div>
+
+  <div class="sec">Books</div>
+  <ul class="books">
+    <li>
+      <span><span class="book-title">The Formal Semantics of Programming Languages</span> <span class="book-author">— Glynn Winskel</span> <span class="tag tag-core">core</span></span>
+      <div class="book-note">Operational, denotational, and axiomatic semantics. Domain theory, fixed points, full abstraction. The exercises are genuinely hard and genuinely worth doing. This is a major text.</div>
+    </li>
+    <li>
+      <span><span class="book-title">Category Theory</span> <span class="book-author">— Steve Awodey</span> <span class="tag tag-math">math</span></span>
+      <div class="book-note">More accessible than Mac Lane; covers similar ground with more attention to the type-theoretic and logical connections. The right first read into category theory for someone approaching from PL.</div>
+    </li>
+    <li>
+      <span><span class="book-title">Categories for the Working Mathematician</span> <span class="book-author">— Saunders Mac Lane</span> <span class="tag tag-math">math</span></span>
+      <div class="book-note">The canonical reference. Functors, natural transformations, adjunctions, monads in the categorical sense. Chapters 1–4 carefully; the rest selectively. Everyone returns to this eventually.</div>
+    </li>
+    <li>
+      <span><span class="book-title">Category Theory for Programmers</span> <span class="book-author">— Bartosz Milewski</span> <span class="tag tag-impl">impl</span></span>
+      <div class="book-note">Free online. The most accessible entry to category theory for working programmers. Read before or alongside Awodey as a motivating companion.</div>
+    </li>
+    <li>
+      <span><span class="book-title">Practical Foundations of Mathematics</span> <span class="book-author">— Paul Taylor</span> <span class="tag tag-adv">advanced</span></span>
+      <div class="book-note">Unusual and brilliant — unifies set theory, type theory, logic, and category theory. Dense; use as a reference and perspective-giver rather than a linear read.</div>
+    </li>
+  </ul>
+
+  <div class="sec">Papers</div>
+  <ul class="papers">
+    <li><span class="paper-title">"LCF Considered as a Programming Language"</span> — Gordon Plotkin, 1977 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"Notions of Computation and Monads"</span> — Eugenio Moggi, 1991 — the categorical foundation of monads <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"Computational Lambda-Calculus and Monads"</span> — Moggi, 1989 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"Data Types à la Carte"</span> — Wouter Swierstra, 2008 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"Algebraic Effects and Handlers"</span> — Matija Pretnar, 2015 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"An Introduction to Algebraic Effects and Handlers"</span> — Pretnar, 2015 (shorter survey) <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"Continuations and the Nature of Universal CPS Transformations"</span> — Plotkin; see also Thielecke's survey <span class="tag tag-paper">paper</span></li>
+  </ul>
+
+  <div class="projects-box">
+    <div class="sec">Projects</div>
+    <ul class="projects">
+      <li>Implement denotational semantics for the while-language from Winskel and verify equivalence with the operational semantics</li>
+      <li>Implement a continuation-passing style (CPS) transformer for lambda calculus</li>
+      <li>Implement algebraic effects and handlers in a small language</li>
+      <li>Work through Awodey Chapters 1–5 with pencil: verify the commutative diagrams by hand</li>
+      <li>Implement a small type-and-effect system (e.g., tracking IO or state effects in a toy language)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- GAP: Substructural and Linear Types -->
+<div class="gap">
+  <div class="sec"><span class="tag tag-gap">gap</span> &nbsp; Substructural &amp; Linear Type Theory</div>
+  <p>Linear types and substructural logics are a commonly omitted thread that connects proof theory to resource management, concurrency, and systems programming. Rust's ownership model is a substructural type system; session types are built on linear logic.</p>
+  <p><strong>"Linear logic"</strong> — Jean-Yves Girard, 1987 — is the founding paper. Technically demanding but worth reading for the structural rules discussion alone (contraction, weakening, exchange — and their absence).</p>
+  <p><strong>ATTAPL Chapter 1</strong> (Substructural Type Systems, Walker) covers this accessibly. <strong>"Propositions as Sessions"</strong> (Wadler, 2012) connects linear logic to session types for concurrent communication — a beautiful paper.</p>
+</div>
+
+
+<!-- PHASE VI -->
+<div class="phase">
+  <div class="phase-header">
+    <div class="phase-num">VI</div>
+    <div class="phase-meta">
+      <div class="phase-label">Phase Six</div>
+      <div class="phase-title">Advanced Type Theory &amp; Research Frontier</div>
+      <div class="phase-desc">Homotopy type theory, cubical type theory, and the frontier of proof assistants. This phase is open-ended by design; it points toward active research rather than a fixed curriculum.</div>
+    </div>
+  </div>
+
+  <div class="sec">Books</div>
+  <ul class="books">
+    <li>
+      <span><span class="book-title">Homotopy Type Theory</span> <span class="book-author">— Univalent Foundations Program</span> <span class="tag tag-core">core</span></span>
+      <div class="book-note">Free online. The univalence axiom, higher inductive types, and the connection between type theory and homotopy theory. Chapters 1–4 are essential; beyond that depends on your direction. Plant the seed in Phase IV; return here fully.</div>
+    </li>
+    <li>
+      <span><span class="book-title">Software Foundations (all volumes)</span> <span class="book-author">— Pierce et al.</span> <span class="tag tag-impl">impl</span></span>
+      <div class="book-note">Free online. Volume 1 (Logical Foundations) covers Coq. Volume 2 (PL Foundations) reprises TAPL content inside Coq. An alternative or complement to PLFA if Coq is preferred over Agda.</div>
+    </li>
+    <li>
+      <span><span class="book-title">Certified Programming with Dependent Types</span> <span class="book-author">— Adam Chlipala</span> <span class="tag tag-adv">advanced</span></span>
+      <div class="book-note">Free online. Coq, proof automation, and certified programs. Takes dependent types seriously as a programming tool. Heavy; use selectively and in parallel with other texts.</div>
+    </li>
+    <li>
+      <span><span class="book-title">Dependent Types at Work</span> <span class="book-author">— Bove &amp; Dybjer</span> <span class="tag tag-impl">impl</span></span>
+      <div class="book-note">A short, practical tutorial on dependent type programming in Agda. Good for consolidating Phase IV material before proceeding further.</div>
+    </li>
+  </ul>
+
+  <div class="sec">Papers</div>
+  <ul class="papers">
+    <li><span class="paper-title">"Univalent Foundations of Mathematics"</span> — Vladimir Voevodsky, 2011 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"Cubical Type Theory: a constructive interpretation of the univalence axiom"</span> — Cohen, Coquand, Huber &amp; Mörtberg, 2016 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"Why Dependent Types Matter"</span> — Altenkirch, McBride &amp; McKinna, 2005 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"The View from the Left"</span> — McBride &amp; McKinna, 2004 — dependent pattern matching <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"Outrageous but Meaningful Coincidences"</span> — Conor McBride, 2010 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"Syntax and Semantics of Dependent Types"</span> — Martin Hofmann, 1997 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title">"Sterling and Harper: Logical Relations as Types"</span> — 2021 — on synthetic Tait computability <span class="tag tag-paper">paper</span></li>
+  </ul>
+
+  <div class="projects-box">
+    <div class="sec">Projects</div>
+    <ul class="projects">
+      <li>Formalize a non-trivial mathematical result in Agda or Coq — e.g., Cantor's theorem, or decidability of a small type system</li>
+      <li>Implement a type checker for a small dependently typed language with Π and Σ types, with elaboration</li>
+      <li>Work through HoTT Book Chapter 2 (homotopy structure of types) with companions from the Agda HoTT library</li>
+      <li>Contribute a small formalization to an existing Agda or Coq library</li>
+      <li>Read one paper from a recent POPL, ICFP, or LICS proceedings in full and write a summary of its contributions</li>
+    </ul>
+  </div>
+</div>
+
+<!-- FINAL GAP: History and Context -->
+<div class="gap">
+  <div class="sec"><span class="tag tag-gap">gap</span> &nbsp; History, Philosophy &amp; Intellectual Context</div>
+  <p>A curriculum in PL theory without historical context produces technical competence without understanding of why the field looks the way it does. The following are not supplementary — they are part of the program.</p>
+  <p><strong>Gödel, Escher, Bach</strong> (Hofstadter) — belongs at the beginning. Its treatment of self-reference, formal systems, and incompleteness is both accessible and genuinely deep.</p>
+  <p><strong>"On Computable Numbers, with an Application to the Entscheidungsproblem"</strong> (Turing, 1936) and <strong>"Computing Machinery and Intelligence"</strong> (Turing, 1950) — short papers that should be read in full. The 1936 paper is the founding document of computation.</p>
+  <p><strong>From Frege to Gödel</strong> (van Heijenoort, ed.) — primary source anthology including Frege, Russell, Hilbert, Herbrand, and Gödel in translation. Invaluable for understanding the historical context of mathematical logic that PL theory inherits.</p>
+  <p><strong>The Art of the Metaobject Protocol</strong> (Kiczales, des Rivières, Bobrow) — for someone from a Lisp/Ruby background, one of the deepest explorations of language extensibility and reflective systems ever written.</p>
+</div>
+
+<hr class="rule">
+
+<div class="footnote">
+  <p>This curriculum covers approximately the content of a two-to-three year graduate program in programming languages, across six phases. The mathematics in Phases I, IV, and V is genuinely hard; plan for periods where progress is slow. The paper list is substantial but most papers are 20–40 pages; reading one paper per week throughout the program covers it comfortably.</p>
+  <p>Several books appear across phases deliberately: TAPL and ATTAPL reward re-reading as background accumulates. The same is true of Barendregt. The projects are where the material consolidates — reading without implementation leaves the understanding incomplete. A working engineer's advantage is the implementation instinct; trust it.</p>
+</div>
+
+</body>
+</html>
