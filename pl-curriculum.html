@@ -142,20 +142,73 @@
     columns: 2; column-gap: 2.5rem;
   }
   @media (max-width: 600px) { .footnote { columns: 1; } }
+
+  a.ext {
+    color: inherit; text-decoration: none;
+    border-bottom: 1px dotted currentColor;
+  }
+  a.ext:hover { color: var(--rust); border-color: var(--rust); }
+  a.ext::after {
+    content: '\00a0↗';
+    font-size: 0.65em; vertical-align: super;
+    font-style: normal; font-weight: normal; letter-spacing: 0;
+  }
 </style>
 </head>
 <body>
 
 <div class="masthead">
   <div class="kicker">Self-Study Curriculum · Programming Languages &amp; Type Theory</div>
-  <h1>A Graduate-Equivalent Program<br>in PL Theory &amp; Implementation</h1>
-  <div class="byline">For a working engineer with a CS degree, functional programming exposure, and serious intent. Calibrated for someone returning to academic mathematics after time away.</div>
+  <h1>A Program<br>in PL Theory &amp; Implementation</h1>
+  <div class="byline">Intended for a working engineer with a CS degree, functional programming exposure, and serious intent. I tried calibrate for someone (like myself) returning to academic mathematics after time away.</div>
   <hr>
 </div>
 
 <div class="intro">
-  <p>Six phases, roughly sequential, with permeable boundaries. Phase I addresses the mathematical proof-writing machinery that tends to atrophy with time away from it — and that a 2009 CS degree likely underemphasized regardless. Phases II–IV cover the classical core of PL theory. Phases V–VI reach toward the research frontier.</p>
-  <p>Each phase contains required books, papers to read (not merely know about), and implementation projects. Projects are the connective tissue — the place where reading becomes understanding. A committed part-time reader should expect three to five years for the full program. Gap boxes identify topics that self-study programs commonly miss entirely.</p>
+  <p>
+        I have not gone to graduate school, and I don't know if I will
+        ever have time to do that. But I really like studying programming
+        languages and, it turns out, type theory. So I'm trying to study it
+        anyways. I've built up a small reading list over time, but this is
+        my attempt, with some assistance from Claude, to organize it into a
+        curriculum. If you happen to be a PhD in this field, and you have
+        thoughts or feedback about the curriculum that Claude and I have
+        generated here, I'd love to hear more, please feel free to
+        <a href="mailto:phil.crissman@gmail.com">email me</a>.
+  </p>
+  <p>
+        Six phases, roughly sequential, though some topics may cross phase boundaries
+        occasionally. Phase I addresses mathematical proof-writing; I found when I
+        started to read Winskel that I lacked background in this, and it felt
+        significant enough that I wanted to cover it well. Phases II–IV cover the
+        classical core of PL theory. Phases V–VI cover more advanced material
+        and possibly even research areas. Again, I am not an expert in any of
+        this; these books and papers have been gathered mostly as I've followed my
+        own interests, and noted the books and papers that are cited by whatever
+        I'm reading at the time, and some of them were suggested by Claude as being
+        relevant to their particular section.
+  </p>
+  <p>
+        Each phase contains required books, papers to read,
+        and implementation projects.
+        I've no idea how long this program would take to complete; a few years at
+        least, I expect, and it probably depends on how much time you have or care
+        to spend on it. Will I even finish it? Great question, but I do want to
+        try. This curriculum was generated with a strong bias toward my current
+        interests. I know there are gaps here; I will most likely be amending and
+        adding (or removing) things as I go on.
+  </p>
+  <p>
+        Please note: I fed Claude a lot of books I was interested in, topics
+        I was interested in, and asked it to organize it into a self-study
+        program, with an intentional ordering, and including suggestions for
+        projects and exercises. I've rewritten <i>some</i> of the text on this page,
+        and I'll probably rewrite more. So all the book &amp; paper descriptions that
+        I haven't got to, well, those are described by Claude. Since most of them
+        are books and papers that I haven't read yet, I don't know that I can
+        offer up anything different to say in the way of descriptions, yet.
+        I plan to update the book notes as I get through the content.
+  </p>
 </div>
 
 <div class="legend">
@@ -175,38 +228,58 @@
     <div class="phase-meta">
       <div class="phase-label">Phase One</div>
       <div class="phase-title">Mathematical Foundations &amp; Proof</div>
-      <div class="phase-desc">The proof-writing reflex atrophies without use. Everything downstream — induction over terms, subject reduction proofs, normalization arguments — requires fluency here. Do not rush past this phase.</div>
+      <div class="phase-desc">The proof-writing reflex atrophies without use.
+            Or, in my case, I don't think
+            my undergrad education covered proofs <i>at all</i>.
+            From what I have seen so far, everything downstream — induction over terms,
+            subject reduction proofs, normalization arguments — requires fluency here.
+            If you <i>did</i> have this sort of material in your undergrad program,
+            you might skip over or lightly review this phase.</div>
     </div>
   </div>
 
   <div class="sec">Books</div>
   <ul class="books">
     <li>
-      <span><span class="book-title">How to Prove It</span> <span class="book-author">— Daniel Velleman</span> <span class="tag tag-core">core</span></span>
-      <div class="book-note">The right starting point: logic, sets, relations, functions, mathematical induction. Do the exercises. The chapters on relations and functions are the ones that matter most for what follows.</div>
+      <span><span class="book-title"><a class="ext" href="https://www.amazon.com/dp/1108439535/?tag=philcrissman-20">How to Prove It</a></span> <span class="book-author">— Daniel Velleman</span> <span class="tag tag-core">core</span></span>
+      <div class="book-note">Seems like the right starting point: logic, sets, relations, functions,
+            mathematical induction. Do the exercises. The chapters on relations and functions seem important.</div>
     </li>
     <li>
-      <span><span class="book-title">Naive Set Theory</span> <span class="book-author">— Paul Halmos</span> <span class="tag tag-math">math</span></span>
-      <div class="book-note">Spare and beautiful. Read alongside Velleman rather than after. Ordinals and cardinals appear later in domain theory and denotational semantics; better to meet them here first.</div>
+      <span><span class="book-title"><a class="ext" href="https://www.amazon.com/dp/0486814874/?tag=philcrissman-20">Naive Set Theory</a></span> <span class="book-author">— Paul Halmos</span> <span class="tag tag-math">math</span></span>
+      <div class="book-note">Spare and beautiful, and surprisingly funny
+            (at least, I thought so). I discovered Halmos from seeing
+            it referenced from Winskel. Maybe read alongside Velleman
+            rather than after. Ordinals and cardinals appear later in
+            domain theory and denotational semantics; better to meet
+            them here first.</div>
     </li>
     <li>
-      <span><span class="book-title">Book of Proof</span> <span class="book-author">— Richard Hammack</span> <span class="tag tag-math">math</span></span>
-      <div class="book-note">Free PDF. A good supplement to Velleman; stronger on combinatorics and graph-flavored proofs. Use selectively rather than cover-to-cover.</div>
+      <span><span class="book-title"><a class="ext" href="https://richardhammack.github.io/BookOfProof/">Book of Proof</a></span> <span class="book-author">— Richard Hammack</span> <span class="tag tag-math">math</span></span>
+      <div class="book-note">Free PDF. Looks like a good supplement to Velleman.
+            Since there is likely a lot of overlap, use selectively rather
+            than cover-to-cover.</div>
     </li>
     <li>
-      <span><span class="book-title">Logic in Computer Science</span> <span class="book-author">— Huth &amp; Ryan</span> <span class="tag tag-core">core</span></span>
-      <div class="book-note">Propositional and predicate logic, natural deduction, temporal logic, model checking. Fills a gap most CS degrees leave. The natural deduction treatment here directly prepares for Curry-Howard.</div>
+      <span><span class="book-title"><a class="ext" href="https://www.amazon.com/dp/052154310X/?tag=philcrissman-20">Logic in Computer Science</a></span> <span class="book-author">— Huth &amp; Ryan</span> <span class="tag tag-core">core</span></span>
+      <div class="book-note">Propositional and predicate logic, natural deduction,
+            temporal logic, model checking. This is one that Claude suggested, I
+            don't know much of it's contents yet.</div>
     </li>
     <li>
-      <span><span class="book-title">Concrete Mathematics</span> <span class="book-author">— Graham, Knuth &amp; Patashnik</span> <span class="tag tag-math">math</span></span>
-      <div class="book-note">Not required early, but invaluable for combinatorial reasoning and summation manipulation. Return to it as needed throughout the program.</div>
+      <span><span class="book-title"><a class="ext" href="https://www.amazon.com/dp/0201558025/?tag=philcrissman-20">Concrete Mathematics</a></span> <span class="book-author">— Graham, Knuth &amp; Patashnik</span> <span class="tag tag-math">math</span></span>
+      <div class="book-note">
+            I've been aware of this book for years, but have never read it. Claude suggests it
+            will be valuable for combinatorial reasoning and summation manipulation.
+            Seems reasonable.
+          </div>
     </li>
   </ul>
 
   <div class="sec">Papers &amp; Essays</div>
   <ul class="papers">
-    <li><span class="paper-title">"Notation as a Tool of Thought"</span> — Kenneth Iverson, 1979 Turing Lecture <span class="tag tag-paper">paper</span></li>
-    <li><span class="paper-title">"Why Functional Programming Matters"</span> — John Hughes, 1990 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://www.eecg.utoronto.ca/~jzhu/csc326/readings/iverson.pdf">"Notation as a Tool of Thought"</a></span> — Kenneth Iverson, 1979 Turing Lecture <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://www.cse.chalmers.se/~rjmh/Papers/whyfp.html">"Why Functional Programming Matters"</a></span> — John Hughes, 1990 <span class="tag tag-paper">paper</span></li>
   </ul>
 
   <div class="projects-box">
@@ -227,30 +300,35 @@
     <div class="phase-meta">
       <div class="phase-label">Phase Two</div>
       <div class="phase-title">Lambda Calculus &amp; Functional Programming Foundations</div>
-      <div class="phase-desc">The untyped lambda calculus is the atom from which PL theory is built. This phase establishes it rigorously and develops the Haskell fluency needed for everything that follows.</div>
+      <div class="phase-desc">The untyped lambda calculus is the atom from which
+            PL theory is built. This phase establishes it rigorously and
+            develops the Haskell fluency needed for everything that follows. I'm
+            also not opposed to developing some OCaml fluency, so when I get here
+            I may well augment this with some of that.
+      </div>
     </div>
   </div>
 
   <div class="sec">Books</div>
   <ul class="books">
     <li>
-      <span><span class="book-title">An Introduction to Functional Programming through Lambda Calculus</span> <span class="book-author">— Greg Michaelson</span> <span class="tag tag-core">core</span></span>
+      <span><span class="book-title"><a class="ext" href="https://www.amazon.com/dp/0486478831/?tag=philcrissman-20">An Introduction to Functional Programming through Lambda Calculus</a></span> <span class="book-author">— Greg Michaelson</span> <span class="tag tag-core">core</span></span>
       <div class="book-note">Underrated. Builds lambda calculus from scratch with an implementation thread throughout. An ideal bridge between prior Scheme exposure and formal theory.</div>
     </li>
     <li>
-      <span><span class="book-title">Programming in Haskell</span> <span class="book-author">— Graham Hutton</span> <span class="tag tag-core">core</span></span>
+      <span><span class="book-title"><a class="ext" href="https://www.amazon.com/dp/1316626229/?tag=philcrissman-20">Programming in Haskell</a></span> <span class="book-author">— Graham Hutton</span> <span class="tag tag-core">core</span></span>
       <div class="book-note">The right way to learn Haskell for someone doing PL theory. Concise, mathematically honest. Complete it before moving to Phase III.</div>
     </li>
     <li>
-      <span><span class="book-title">The Haskell Road to Logic, Maths and Programming</span> <span class="book-author">— Doets &amp; van Eijck</span> <span class="tag tag-math">math</span></span>
+      <span><span class="book-title"><a class="ext" href="https://www.amazon.com/dp/0954300696/?tag=philcrissman-20">The Haskell Road to Logic, Maths and Programming</a></span> <span class="book-author">— Doets &amp; van Eijck</span> <span class="tag tag-math">math</span></span>
       <div class="book-note">Covers Phase I topics through Haskell — sets, relations, induction, number theory. A valuable second pass once Hutton is done; reinforces both mathematical and Haskell fluency simultaneously.</div>
     </li>
     <li>
-      <span><span class="book-title">Structure and Interpretation of Computer Programs</span> <span class="book-author">— Abelson &amp; Sussman</span> <span class="tag tag-impl">impl</span></span>
+      <span><span class="book-title"><a class="ext" href="https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/full-text/book/book.html">Structure and Interpretation of Computer Programs</a></span> <span class="book-author">— Abelson &amp; Sussman</span> <span class="tag tag-impl">impl</span></span>
       <div class="book-note">If prior Scheme exposure was shallow, SICP deepens it. Chapters 4–5 (metacircular evaluator, register machine) are directly relevant to interpreter implementation.</div>
     </li>
     <li>
-      <span><span class="book-title">The Lambda Calculus: Its Syntax and Semantics</span> <span class="book-author">— H.P. Barendregt</span> <span class="tag tag-adv">advanced</span></span>
+      <span><span class="book-title"><a class="ext" href="https://www.amazon.com/dp/184890066X/?tag=philcrissman-20">The Lambda Calculus: Its Syntax and Semantics</a></span> <span class="book-author">— H.P. Barendregt</span> <span class="tag tag-adv">advanced</span></span>
       <div class="book-note">The definitive reference. Not a cover-to-cover read at this stage — use it for Church-Rosser, normal forms, and combinatory logic. Return repeatedly throughout the program.</div>
     </li>
   </ul>
@@ -258,9 +336,9 @@
   <div class="sec">Papers</div>
   <ul class="papers">
     <li><span class="paper-title">"Recursive Functions of Symbolic Expressions and Their Computation by Machine"</span> — John McCarthy, 1960 <span class="tag tag-paper">paper</span></li>
-    <li><span class="paper-title">"Can Programming Be Liberated from the Von Neumann Style?"</span> — John Backus, 1978 Turing Lecture <span class="tag tag-paper">paper</span></li>
-    <li><span class="paper-title">"The Mechanical Evaluation of Expressions"</span> — Peter Landin, 1964 <span class="tag tag-paper">paper</span></li>
-    <li><span class="paper-title">"The Next 700 Programming Languages"</span> — Peter Landin, 1966 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://worrydream.com/refs/Backus_1978_-_Can_Programming_Be_Liberated_from_the_von_Neumann_Style.pdf">"Can Programming Be Liberated from the Von Neumann Style?"</a></span> — John Backus, 1978 Turing Lecture <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://pdfs.semanticscholar.org/4969/5d3cbf0d03e8ab28a738108271993b5ac05e.pdf">"The Mechanical Evaluation of Expressions"</a></span> — Peter Landin, 1964 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://www.cs.cmu.edu/~crary/819-f09/Landin66.pdf">"The Next 700 Programming Languages"</a></span> — Peter Landin, 1966 <span class="tag tag-paper">paper</span></li>
   </ul>
 
   <div class="projects-box">
@@ -290,31 +368,31 @@
   <div class="sec">Books</div>
   <ul class="books">
     <li>
-      <span><span class="book-title">Types and Programming Languages</span> <span class="book-author">— Benjamin Pierce</span> <span class="tag tag-core">core</span></span>
+      <span><span class="book-title"><a class="ext" href="https://www.amazon.com/dp/0262162091/?tag=philcrissman-20">Types and Programming Languages</a></span> <span class="book-author">— Benjamin Pierce</span> <span class="tag tag-core">core</span></span>
       <div class="book-note">The central text of the curriculum. Read in full; work the exercises; implement the systems. The OCaml implementations in the book's artifact are worth running and modifying. Rewards multiple readings.</div>
     </li>
     <li>
-      <span><span class="book-title">Practical Foundations for Programming Languages</span> <span class="book-author">— Robert Harper</span> <span class="tag tag-core">core</span></span>
+      <span><span class="book-title"><a class="ext" href="https://www.cs.cmu.edu/~rwh/pfpl.html">Practical Foundations for Programming Languages</a></span> <span class="book-author">— Robert Harper</span> <span class="tag tag-core">core</span></span>
       <div class="book-note">Free PDF from CMU. Harper's approach is distinct from Pierce's and essential as a second voice. His treatment of statics and dynamics is unusually clear; the abstract binding tree framework is worth knowing.</div>
     </li>
     <li>
-      <span><span class="book-title">Advanced Topics in Types and Programming Languages</span> <span class="book-author">— Pierce (ed.)</span> <span class="tag tag-core">core</span></span>
+      <span><span class="book-title"><a class="ext" href="https://www.amazon.com/dp/0262162288/?tag=philcrissman-20">Advanced Topics in Types and Programming Languages</a></span> <span class="book-author">— Pierce (ed.)</span> <span class="tag tag-core">core</span></span>
       <div class="book-note">Edited volume covering effect types, dependent types, substructural types, and more. Read selectively alongside Phases IV–V; not a linear read. The Walker chapter on substructural types is essential.</div>
     </li>
   </ul>
 
   <div class="sec">Papers</div>
   <ul class="papers">
-    <li><span class="paper-title">"A Formulation of the Simple Theory of Types"</span> — Alonzo Church, 1940 <span class="tag tag-paper">paper</span></li>
-    <li><span class="paper-title">"The Principal Type-Scheme of an Object in Combinatory Logic"</span> — Hindley, 1969 <span class="tag tag-paper">paper</span></li>
-    <li><span class="paper-title">"A Theory of Type Polymorphism in Programming"</span> — Robin Milner, 1978 <span class="tag tag-paper">paper</span></li>
-    <li><span class="paper-title">"Principal Type-Schemes for Functional Programs"</span> — Damas &amp; Milner, 1982 <span class="tag tag-paper">paper</span></li>
-    <li><span class="paper-title">"Towards a Theory of Type Structure"</span> — John Reynolds, 1974 <span class="tag tag-paper">paper</span></li>
-    <li><span class="paper-title">"Types, Abstraction and Parametric Polymorphism"</span> — John Reynolds, 1983 — parametricity <span class="tag tag-paper">paper</span></li>
-    <li><span class="paper-title">"Theorems for Free!"</span> — Philip Wadler, 1989 <span class="tag tag-paper">paper</span></li>
-    <li><span class="paper-title">"How to Make ad-hoc Polymorphism Less ad-hoc"</span> — Wadler &amp; Blott, 1989 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://www.classes.cs.uchicago.edu/archive/2007/spring/32001-1/papers/church-1940.pdf">"A Formulation of the Simple Theory of Types"</a></span> — Alonzo Church, 1940 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://www.ams.org/journals/tran/1969-146-00/S0002-9947-1969-0253905-6/S0002-9947-1969-0253905-6.pdf">"The Principal Type-Scheme of an Object in Combinatory Logic"</a></span> — Hindley, 1969 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://homepages.inf.ed.ac.uk/wadler/papers/papers-we-love/milner-type-polymorphism.pdf">"A Theory of Type Polymorphism in Programming"</a></span> — Robin Milner, 1978 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://dl.acm.org/doi/10.1145/582153.582176">"Principal Type-Schemes for Functional Programs"</a></span> — Damas &amp; Milner, 1982 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://www.cs.cmu.edu/~crary/819-f09/Reynolds74.pdf">"Towards a Theory of Type Structure"</a></span> — John Reynolds, 1974 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://people.mpi-sws.org/~dreyer/tor/papers/reynolds.pdf">"Types, Abstraction and Parametric Polymorphism"</a></span> — John Reynolds, 1983 — parametricity <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://dl.acm.org/doi/pdf/10.1145/99370.99404">"Theorems for Free!"</a></span> — Philip Wadler, 1989 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="http://users.csc.calpoly.edu/~akeen/courses/csc530/references/wadler.pdf">"How to Make ad-hoc Polymorphism Less ad-hoc"</a></span> — Wadler &amp; Blott, 1989 <span class="tag tag-paper">paper</span></li>
     <li><span class="paper-title">"The Essence of Functional Programming"</span> — Wadler, 1992 — introduces monads to FP <span class="tag tag-paper">paper</span></li>
-    <li><span class="paper-title">"Monads for Functional Programming"</span> — Wadler, 1995 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://homepages.inf.ed.ac.uk/wadler/papers/marktoberdorf/baastad.pdf">"Monads for Functional Programming"</a></span> — Wadler, 1995 <span class="tag tag-paper">paper</span></li>
   </ul>
 
   <div class="projects-box">
@@ -334,8 +412,8 @@
 <div class="gap">
   <div class="sec"><span class="tag tag-gap">gap</span> &nbsp; Formal Operational Semantics &amp; Structural Proof Methods</div>
   <p>Many self-study programs in type theory underemphasize the mechanics of formal operational semantics and the structural proof style used in PL papers. Progress and preservation, strong normalization, confluence — these are not just topics to read about; they are proof techniques to practice.</p>
-  <p><strong>The Formal Semantics of Programming Languages</strong> (Winskel) covers this, and belongs here as a companion to TAPL. Its exercises on relations and structural induction are exactly the ones that feel hard until they don't. This book also introduces denotational semantics and domain theory, making it a bridge to Phase V.</p>
-  <p><strong>Semantics of Programming Languages</strong> (Gunter) is complementary to Winskel with stronger domain theory coverage. Optional but valuable for someone who wants that depth earlier.</p>
+  <p><strong><a class="ext" href="https://www.amazon.com/dp/0262731037/?tag=philcrissman-20">The Formal Semantics of Programming Languages</a></strong> (Winskel) covers this, and belongs here as a companion to TAPL. Its exercises on relations and structural induction are exactly the ones that feel hard until they don't. This book also introduces denotational semantics and domain theory, making it a bridge to Phase V.</p>
+  <p><strong><a class="ext" href="https://www.amazon.com/dp/0262570955/?tag=philcrissman-20">Semantics of Programming Languages</a></strong> (Gunter) is complementary to Winskel with stronger domain theory coverage. Optional but valuable for someone who wants that depth earlier.</p>
 </div>
 
 
@@ -353,36 +431,36 @@
   <div class="sec">Books</div>
   <ul class="books">
     <li>
-      <span><span class="book-title">Programming Language Foundations in Agda</span> <span class="book-author">— Philip Wadler et al.</span> <span class="tag tag-core">core</span></span>
+      <span><span class="book-title"><a class="ext" href="https://plfa.github.io/">Programming Language Foundations in Agda</a></span> <span class="book-author">— Philip Wadler et al.</span> <span class="tag tag-core">core</span></span>
       <div class="book-note">Free online. Teaches TAPL-style PL theory through dependent type proofs in Agda. Covers Curry-Howard directly. The PL framing makes it the right place to encounter dependent types for someone coming from TAPL.</div>
     </li>
     <li>
-      <span><span class="book-title">Lectures on the Curry-Howard Isomorphism</span> <span class="book-author">— Sørensen &amp; Urzyczyn</span> <span class="tag tag-core">core</span></span>
+      <span><span class="book-title"><a class="ext" href="https://www.amazon.com/dp/0444520775/?tag=philcrissman-20">Lectures on the Curry-Howard Isomorphism</a></span> <span class="book-author">— Sørensen &amp; Urzyczyn</span> <span class="tag tag-core">core</span></span>
       <div class="book-note">The book dedicated entirely to this topic. Goes from simple types through System F through second-order logic. Technically demanding; uniquely focused.</div>
     </li>
     <li>
-      <span><span class="book-title">Basic Proof Theory</span> <span class="book-author">— Troelstra &amp; Schwichtenberg</span> <span class="tag tag-math">math</span></span>
+      <span><span class="book-title"><a class="ext" href="https://www.amazon.com/dp/0521779111/?tag=philcrissman-20">Basic Proof Theory</a></span> <span class="book-author">— Troelstra &amp; Schwichtenberg</span> <span class="tag tag-math">math</span></span>
       <div class="book-note">Natural deduction, sequent calculus, cut elimination (Gentzen's Hauptsatz), normalization. This is where Gentzen's work lives in textbook form. Dense; work through it slowly.</div>
     </li>
     <li>
-      <span><span class="book-title">Type Theory and Formal Proof: An Introduction</span> <span class="book-author">— Nederpelt &amp; Geuvers</span> <span class="tag tag-math">math</span></span>
+      <span><span class="book-title"><a class="ext" href="https://www.amazon.com/dp/110703650X/?tag=philcrissman-20">Type Theory and Formal Proof: An Introduction</a></span> <span class="book-author">— Nederpelt &amp; Geuvers</span> <span class="tag tag-math">math</span></span>
       <div class="book-note">Covers the Lambda Cube (Barendregt's classification of type systems) systematically. Good on the pure type systems framework. More accessible than Barendregt's full treatment.</div>
     </li>
     <li>
-      <span><span class="book-title">Proofs and Fundamentals</span> <span class="book-author">— Ethan Bloch</span> <span class="tag tag-math">math</span></span>
+      <span><span class="book-title"><a class="ext" href="https://www.amazon.com/dp/1441971262/?tag=philcrissman-20">Proofs and Fundamentals</a></span> <span class="book-author">— Ethan Bloch</span> <span class="tag tag-math">math</span></span>
       <div class="book-note">If proof fluency is still unsteady after Phase I, this is the most thorough remediation available. Particularly strong on mathematical induction and its structural variants.</div>
     </li>
   </ul>
 
   <div class="sec">Papers</div>
   <ul class="papers">
-    <li><span class="paper-title">"Propositions as Types"</span> — Philip Wadler, 2015 — the essential historical survey <span class="tag tag-paper">paper</span></li>
-    <li><span class="paper-title">"The formulae-as-types notion of construction"</span> — William Howard, circulated 1969, published 1980 <span class="tag tag-paper">paper</span></li>
-    <li><span class="paper-title">"An intuitionistic theory of types"</span> — Per Martin-Löf, 1975 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://homepages.inf.ed.ac.uk/wadler/papers/propositions-as-types/propositions-as-types.pdf">"Propositions as Types"</a></span> — Philip Wadler, 2015 — the essential historical survey <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://www.cs.cmu.edu/~crary/819-f09/Howard80.pdf">"The formulae-as-types notion of construction"</a></span> — William Howard, circulated 1969, published 1980 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://github.com/michaelt/martin-lof/blob/master/pdfs/An-Intuitionistic-Theory-of-Types-Predicative-Part-1975.pdf">"An intuitionistic theory of types"</a></span> — Per Martin-Löf, 1975 <span class="tag tag-paper">paper</span></li>
     <li><span class="paper-title">"Untersuchungen über das logische Schließen"</span> — Gerhard Gentzen, 1935 — read in translation <span class="tag tag-paper">paper</span></li>
     <li><span class="paper-title">"On formally undecidable propositions of Principia Mathematica"</span> — Gödel, 1931 — read a good translation with commentary <span class="tag tag-paper">paper</span></li>
-    <li><span class="paper-title">"A tutorial implementation of a dependently typed lambda calculus"</span> — Löh, McBride &amp; Swierstra, 2010 <span class="tag tag-paper">paper</span></li>
-    <li><span class="paper-title">"Bidirectional Typing"</span> — Dunfield &amp; Krishnaswami, 2021 — survey of bidirectional type checking <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://www.andres-loeh.de/LambdaPi/LambdaPi.pdf">"A tutorial implementation of a dependently typed lambda calculus"</a></span> — Löh, McBride &amp; Swierstra, 2010 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://arxiv.org/pdf/1908.05839">"Bidirectional Typing"</a></span> — Dunfield &amp; Krishnaswami, 2021 — survey of bidirectional type checking <span class="tag tag-paper">paper</span></li>
   </ul>
 
   <div class="projects-box">
@@ -412,35 +490,34 @@
   <div class="sec">Books</div>
   <ul class="books">
     <li>
-      <span><span class="book-title">The Formal Semantics of Programming Languages</span> <span class="book-author">— Glynn Winskel</span> <span class="tag tag-core">core</span></span>
+      <span><span class="book-title"><a class="ext" href="https://www.amazon.com/dp/0262731037/?tag=philcrissman-20">The Formal Semantics of Programming Languages</a></span> <span class="book-author">— Glynn Winskel</span> <span class="tag tag-core">core</span></span>
       <div class="book-note">Operational, denotational, and axiomatic semantics. Domain theory, fixed points, full abstraction. The exercises are genuinely hard and genuinely worth doing. This is a major text.</div>
     </li>
     <li>
-      <span><span class="book-title">Category Theory</span> <span class="book-author">— Steve Awodey</span> <span class="tag tag-math">math</span></span>
+      <span><span class="book-title"><a class="ext" href="https://www.amazon.com/dp/0199237182/?tag=philcrissman-20">Category Theory</a></span> <span class="book-author">— Steve Awodey</span> <span class="tag tag-math">math</span></span>
       <div class="book-note">More accessible than Mac Lane; covers similar ground with more attention to the type-theoretic and logical connections. The right first read into category theory for someone approaching from PL.</div>
     </li>
     <li>
-      <span><span class="book-title">Categories for the Working Mathematician</span> <span class="book-author">— Saunders Mac Lane</span> <span class="tag tag-math">math</span></span>
+      <span><span class="book-title"><a class="ext" href="https://www.amazon.com/dp/0387984038/?tag=philcrissman-20">Categories for the Working Mathematician</a></span> <span class="book-author">— Saunders Mac Lane</span> <span class="tag tag-math">math</span></span>
       <div class="book-note">The canonical reference. Functors, natural transformations, adjunctions, monads in the categorical sense. Chapters 1–4 carefully; the rest selectively. Everyone returns to this eventually.</div>
     </li>
     <li>
-      <span><span class="book-title">Category Theory for Programmers</span> <span class="book-author">— Bartosz Milewski</span> <span class="tag tag-impl">impl</span></span>
+      <span><span class="book-title"><a class="ext" href="https://github.com/hmemcpy/milewski-ctfp-pdf">Category Theory for Programmers</a></span> <span class="book-author">— Bartosz Milewski</span> <span class="tag tag-impl">impl</span></span>
       <div class="book-note">Free online. The most accessible entry to category theory for working programmers. Read before or alongside Awodey as a motivating companion.</div>
     </li>
     <li>
-      <span><span class="book-title">Practical Foundations of Mathematics</span> <span class="book-author">— Paul Taylor</span> <span class="tag tag-adv">advanced</span></span>
+      <span><span class="book-title"><a class="ext" href="https://www.paultaylor.eu/prafm/html/index.html">Practical Foundations of Mathematics</a></span> <span class="book-author">— Paul Taylor</span> <span class="tag tag-adv">advanced</span></span>
       <div class="book-note">Unusual and brilliant — unifies set theory, type theory, logic, and category theory. Dense; use as a reference and perspective-giver rather than a linear read.</div>
     </li>
   </ul>
 
   <div class="sec">Papers</div>
   <ul class="papers">
-    <li><span class="paper-title">"LCF Considered as a Programming Language"</span> — Gordon Plotkin, 1977 <span class="tag tag-paper">paper</span></li>
-    <li><span class="paper-title">"Notions of Computation and Monads"</span> — Eugenio Moggi, 1991 — the categorical foundation of monads <span class="tag tag-paper">paper</span></li>
-    <li><span class="paper-title">"Computational Lambda-Calculus and Monads"</span> — Moggi, 1989 <span class="tag tag-paper">paper</span></li>
-    <li><span class="paper-title">"Data Types à la Carte"</span> — Wouter Swierstra, 2008 <span class="tag tag-paper">paper</span></li>
-    <li><span class="paper-title">"Algebraic Effects and Handlers"</span> — Matija Pretnar, 2015 <span class="tag tag-paper">paper</span></li>
-    <li><span class="paper-title">"An Introduction to Algebraic Effects and Handlers"</span> — Pretnar, 2015 (shorter survey) <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://homepages.inf.ed.ac.uk/gdp/publications/LCF.pdf">"LCF Considered as a Programming Language"</a></span> — Gordon Plotkin, 1977 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://www.cs.cmu.edu/~crary/819-f09/Moggi91.pdf">"Notions of Computation and Monads"</a></span> — Eugenio Moggi, 1991 — the categorical foundation of monads <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://www.cs.cmu.edu/~crary/819-f09/Moggi89.pdf">"Computational Lambda-Calculus and Monads"</a></span> — Moggi, 1989 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://www.cambridge.org/core/journals/journal-of-functional-programming/article/data-types-a-la-carte/14416CB20C4637164EA9F77097909409">"Data Types à la Carte"</a></span> — Wouter Swierstra, 2008 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://www.eff-lang.org/handlers-tutorial.pdf">"An Introduction to Algebraic Effects and Handlers"</a></span> — Matija Pretnar, 2015 <span class="tag tag-paper">paper</span></li>
     <li><span class="paper-title">"Continuations and the Nature of Universal CPS Transformations"</span> — Plotkin; see also Thielecke's survey <span class="tag tag-paper">paper</span></li>
   </ul>
 
@@ -461,7 +538,7 @@
   <div class="sec"><span class="tag tag-gap">gap</span> &nbsp; Substructural &amp; Linear Type Theory</div>
   <p>Linear types and substructural logics are a commonly omitted thread that connects proof theory to resource management, concurrency, and systems programming. Rust's ownership model is a substructural type system; session types are built on linear logic.</p>
   <p><strong>"Linear logic"</strong> — Jean-Yves Girard, 1987 — is the founding paper. Technically demanding but worth reading for the structural rules discussion alone (contraction, weakening, exchange — and their absence).</p>
-  <p><strong>ATTAPL Chapter 1</strong> (Substructural Type Systems, Walker) covers this accessibly. <strong>"Propositions as Sessions"</strong> (Wadler, 2012) connects linear logic to session types for concurrent communication — a beautiful paper.</p>
+  <p><strong>ATTAPL Chapter 1</strong> (Substructural Type Systems, Walker) covers this accessibly. <strong><a class="ext" href="https://homepages.inf.ed.ac.uk/wadler/papers/propositions-as-sessions/propositions-as-sessions.pdf">"Propositions as Sessions"</a></strong> (Wadler, 2012) connects linear logic to session types for concurrent communication — a beautiful paper.</p>
 </div>
 
 
@@ -479,15 +556,15 @@
   <div class="sec">Books</div>
   <ul class="books">
     <li>
-      <span><span class="book-title">Homotopy Type Theory</span> <span class="book-author">— Univalent Foundations Program</span> <span class="tag tag-core">core</span></span>
+      <span><span class="book-title"><a class="ext" href="https://homotopytypetheory.org/book/">Homotopy Type Theory</a></span> <span class="book-author">— Univalent Foundations Program</span> <span class="tag tag-core">core</span></span>
       <div class="book-note">Free online. The univalence axiom, higher inductive types, and the connection between type theory and homotopy theory. Chapters 1–4 are essential; beyond that depends on your direction. Plant the seed in Phase IV; return here fully.</div>
     </li>
     <li>
-      <span><span class="book-title">Software Foundations (all volumes)</span> <span class="book-author">— Pierce et al.</span> <span class="tag tag-impl">impl</span></span>
+      <span><span class="book-title"><a class="ext" href="https://softwarefoundations.cis.upenn.edu/">Software Foundations (all volumes)</a></span> <span class="book-author">— Pierce et al.</span> <span class="tag tag-impl">impl</span></span>
       <div class="book-note">Free online. Volume 1 (Logical Foundations) covers Coq. Volume 2 (PL Foundations) reprises TAPL content inside Coq. An alternative or complement to PLFA if Coq is preferred over Agda.</div>
     </li>
     <li>
-      <span><span class="book-title">Certified Programming with Dependent Types</span> <span class="book-author">— Adam Chlipala</span> <span class="tag tag-adv">advanced</span></span>
+      <span><span class="book-title"><a class="ext" href="http://adam.chlipala.net/cpdt/">Certified Programming with Dependent Types</a></span> <span class="book-author">— Adam Chlipala</span> <span class="tag tag-adv">advanced</span></span>
       <div class="book-note">Free online. Coq, proof automation, and certified programs. Takes dependent types seriously as a programming tool. Heavy; use selectively and in parallel with other texts.</div>
     </li>
     <li>
@@ -498,13 +575,13 @@
 
   <div class="sec">Papers</div>
   <ul class="papers">
-    <li><span class="paper-title">"Univalent Foundations of Mathematics"</span> — Vladimir Voevodsky, 2011 <span class="tag tag-paper">paper</span></li>
-    <li><span class="paper-title">"Cubical Type Theory: a constructive interpretation of the univalence axiom"</span> — Cohen, Coquand, Huber &amp; Mörtberg, 2016 <span class="tag tag-paper">paper</span></li>
-    <li><span class="paper-title">"Why Dependent Types Matter"</span> — Altenkirch, McBride &amp; McKinna, 2005 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://www.math.ias.edu/vladimir/sites/math.ias.edu.vladimir/files/2011_Templeton.pdf">"Univalent Foundations of Mathematics"</a></span> — Vladimir Voevodsky, 2011 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://arxiv.org/pdf/1611.02108">"Cubical Type Theory: a constructive interpretation of the univalence axiom"</a></span> — Cohen, Coquand, Huber &amp; Mörtberg, 2016 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://people.cs.nott.ac.uk/psztxa/publ/ydtm.pdf">"Why Dependent Types Matter"</a></span> — Altenkirch, McBride &amp; McKinna, 2005 <span class="tag tag-paper">paper</span></li>
     <li><span class="paper-title">"The View from the Left"</span> — McBride &amp; McKinna, 2004 — dependent pattern matching <span class="tag tag-paper">paper</span></li>
-    <li><span class="paper-title">"Outrageous but Meaningful Coincidences"</span> — Conor McBride, 2010 <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://personal.cis.strath.ac.uk/conor.mcbride/pub/DepRep/DepRep.pdf">"Outrageous but Meaningful Coincidences"</a></span> — Conor McBride, 2010 <span class="tag tag-paper">paper</span></li>
     <li><span class="paper-title">"Syntax and Semantics of Dependent Types"</span> — Martin Hofmann, 1997 <span class="tag tag-paper">paper</span></li>
-    <li><span class="paper-title">"Sterling and Harper: Logical Relations as Types"</span> — 2021 — on synthetic Tait computability <span class="tag tag-paper">paper</span></li>
+    <li><span class="paper-title"><a class="ext" href="https://www.cs.cmu.edu/~rwh/papers/lrat/jacm.pdf">"Sterling and Harper: Logical Relations as Types"</a></span> — 2021 — on synthetic Tait computability <span class="tag tag-paper">paper</span></li>
   </ul>
 
   <div class="projects-box">
@@ -523,17 +600,17 @@
 <div class="gap">
   <div class="sec"><span class="tag tag-gap">gap</span> &nbsp; History, Philosophy &amp; Intellectual Context</div>
   <p>A curriculum in PL theory without historical context produces technical competence without understanding of why the field looks the way it does. The following are not supplementary — they are part of the program.</p>
-  <p><strong>Gödel, Escher, Bach</strong> (Hofstadter) — belongs at the beginning. Its treatment of self-reference, formal systems, and incompleteness is both accessible and genuinely deep.</p>
-  <p><strong>"On Computable Numbers, with an Application to the Entscheidungsproblem"</strong> (Turing, 1936) and <strong>"Computing Machinery and Intelligence"</strong> (Turing, 1950) — short papers that should be read in full. The 1936 paper is the founding document of computation.</p>
-  <p><strong>From Frege to Gödel</strong> (van Heijenoort, ed.) — primary source anthology including Frege, Russell, Hilbert, Herbrand, and Gödel in translation. Invaluable for understanding the historical context of mathematical logic that PL theory inherits.</p>
-  <p><strong>The Art of the Metaobject Protocol</strong> (Kiczales, des Rivières, Bobrow) — for someone from a Lisp/Ruby background, one of the deepest explorations of language extensibility and reflective systems ever written.</p>
+  <p><strong><a class="ext" href="https://www.amazon.com/dp/0465026567/?tag=philcrissman-20">Gödel, Escher, Bach</a></strong> (Hofstadter) — belongs at the beginning. Its treatment of self-reference, formal systems, and incompleteness is both accessible and genuinely deep.</p>
+  <p><strong><a class="ext" href="https://people.math.ethz.ch/~halorenz/4students/Literatur/TuringFullText.pdf">"On Computable Numbers, with an Application to the Entscheidungsproblem"</a></strong> (Turing, 1936) and <strong><a class="ext" href="https://www.cs.ox.ac.uk/activities/ieg/e-library/sources/t_article.pdf">"Computing Machinery and Intelligence"</a></strong> (Turing, 1950) — short papers that should be read in full. The 1936 paper is the founding document of computation.</p>
+  <p><strong><a class="ext" href="https://www.amazon.com/dp/0674324498/?tag=philcrissman-20">From Frege to Gödel</a></strong> (van Heijenoort, ed.) — primary source anthology including Frege, Russell, Hilbert, Herbrand, and Gödel in translation. Invaluable for understanding the historical context of mathematical logic that PL theory inherits.</p>
+  <p><strong><a class="ext" href="https://www.amazon.com/dp/0262610744/?tag=philcrissman-20">The Art of the Metaobject Protocol</a></strong> (Kiczales, des Rivières, Bobrow) — for someone from a Lisp/Ruby background, one of the deepest explorations of language extensibility and reflective systems ever written.</p>
 </div>
 
 <hr class="rule">
 
 <div class="footnote">
   <p>This curriculum covers approximately the content of a two-to-three year graduate program in programming languages, across six phases. The mathematics in Phases I, IV, and V is genuinely hard; plan for periods where progress is slow. The paper list is substantial but most papers are 20–40 pages; reading one paper per week throughout the program covers it comfortably.</p>
-  <p>Several books appear across phases deliberately: TAPL and ATTAPL reward re-reading as background accumulates. The same is true of Barendregt. The projects are where the material consolidates — reading without implementation leaves the understanding incomplete. A working engineer's advantage is the implementation instinct; trust it.</p>
+  <p>Several books appear across phases deliberately: TAPL and ATTAPL reward re-reading as background accumulates. The same is true of Barendregt. The projects are where the material consolidates — reading without implementation leaves the understanding incomplete.</p>
 </div>
 
 </body>
