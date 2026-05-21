@@ -65,6 +65,7 @@ $(function(){
       var color = "#222";
     }
     setTimeout(function() {
+      paper.circle(x,y,10).attr({"stroke":"#f5f0e8","stroke-width":4});
       paper.circle(x,y,10).attr({"stroke":color,"stroke-width":2});
       paper.text(x,y,label).attr({"font-family":"ETBembo, Palatino, Book Antiqua, Georgia, serif","font-size":"10px","font-weight":"800","fill":color});
     }, setTime);
@@ -80,9 +81,11 @@ $(function(){
     // var color = colorCycle();
     setTimeout(function() {
       if (x === xx) {
-        paper.path("M"+x+","+y+"L"+xx+","+yy).attr({"stroke-width":2,"arrow-end":arrowStyle,"stroke":color});//.glow({"color":color,"width":glowWidth});
+        paper.path("M"+x+","+y+"L"+xx+","+yy).attr({"stroke-width":4,"stroke":"#f5f0e8"});
+        paper.path("M"+x+","+y+"L"+xx+","+yy).attr({"stroke-width":2,"arrow-end":arrowStyle,"stroke":color});
       } else {
-        paper.path("M"+x+","+y+"V"+ly+"H"+xx+"V"+yy).attr({"stroke-width":2,"arrow-end":arrowStyle,"stroke":color});//.glow({"color":color,"width":glowWidth});
+        paper.path("M"+x+","+y+"V"+ly+"H"+xx+"V"+yy).attr({"stroke-width":4,"stroke":"#f5f0e8"});
+        paper.path("M"+x+","+y+"V"+ly+"H"+xx+"V"+yy).attr({"stroke-width":2,"arrow-end":arrowStyle,"stroke":color});
       }
     }, setTime);
     setTime = setTime + timing;
@@ -93,7 +96,8 @@ $(function(){
       var color = "#222";
     }
     setTimeout(function(){
-      paper.path("M"+50+","+y+"H75V"+ly+"H"+x+"V"+(y-10)).attr({"stroke-width":2,"stroke":color,"arrow-end":arrowStyle});//.glow({"color":color,"width":glowWidth});
+      paper.path("M"+50+","+y+"H75V"+ly+"H"+x+"V"+(y-10)).attr({"stroke-width":4,"stroke":"#f5f0e8"});
+      paper.path("M"+50+","+y+"H75V"+ly+"H"+x+"V"+(y-10)).attr({"stroke-width":2,"stroke":color,"arrow-end":arrowStyle});
     }, setTime);
     setTime = setTime + timing;
   }
