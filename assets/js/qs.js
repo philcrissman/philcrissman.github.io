@@ -96,8 +96,8 @@ $(function(){
       var color = "#222";
     }
     setTimeout(function(){
-      paper.path("M"+50+","+y+"H75V"+ly+"H"+x+"V"+(y-10)).attr({"stroke-width":4,"stroke":"#f5f0e8"});
-      paper.path("M"+50+","+y+"H75V"+ly+"H"+x+"V"+(y-10)).attr({"stroke-width":2,"stroke":color,"arrow-end":arrowStyle});
+      paper.path("M"+50+","+y+"H75V"+ly+"H"+x+"V"+(y-12)).attr({"stroke-width":4,"stroke":"#f5f0e8"});
+      paper.path("M"+50+","+y+"H75V"+ly+"H"+x+"V"+(y-12)).attr({"stroke-width":2,"stroke":color,"arrow-end":arrowStyle});
     }, setTime);
     setTime = setTime + timing;
   }
@@ -165,7 +165,7 @@ $(function(){
     
     // draw the throughline for the pivot
     var c = arrayMap[lo]['color'];
-    drawLine(xCalc(lo),currentYOffset+10,xCalc(lo),yOffset+90,lineYOffset,c);
+    drawLine(xCalc(lo),currentYOffset+12,xCalc(lo),yOffset+88,lineYOffset,c);
     drawCircle(xCalc(lo),yOffset+100,list[lo],c);
     arrayMap[lo]['lastY'] = yOffset+100;
 
@@ -195,7 +195,7 @@ $(function(){
     arrayMap['pivot']['color'] = c;
     drawCircle(xCalc(start),lastYOffset,list[start],c);
     arrayMap[start]['lastY'] = lastYOffset;
-    drawLine(xCalc(start),lastYOffset+10,40,yOffset-10,lineYOffset,c);
+    drawLine(xCalc(start),lastYOffset+12,40,yOffset-12,lineYOffset,c);
     incrementLYOffset();
     drawCircle(40,yOffset,pivot,c);
 
@@ -209,7 +209,7 @@ $(function(){
         if (moved.indexOf(hi) < 0) {
           var c = arrayMap[hi]['color'];
           drawCircle(xCalc(hi),lastYOffset,list[hi],c);
-          drawLine(xCalc(hi),lastYOffset+10,xCalc(hi),yOffset-10,lineYOffset,c);
+          drawLine(xCalc(hi),lastYOffset+12,xCalc(hi),yOffset-12,lineYOffset,c);
           drawCircle(xCalc(hi),yOffset,list[hi],c);
           arrayMap[hi]['lastY'] = yOffset;
         }
@@ -232,7 +232,7 @@ $(function(){
       var c = arrayMap[hi]['color'];
       arrayMap[lo]['color'] = c;
       drawCircle(xCalc(hi),lastYOffset,list[hi],c);
-      drawLine(xCalc(hi),lastYOffset+10,xCalc(lo),yOffset-10,lineYOffset,c);
+      drawLine(xCalc(hi),lastYOffset+12,xCalc(lo),yOffset-12,lineYOffset,c);
       incrementLYOffset();
       drawCircle(xCalc(lo),yOffset,list[hi],c);
       arrayMap[lo]['lastY'] = yOffset;
@@ -245,7 +245,7 @@ $(function(){
           x = xCalc(lo);
           var c = arrayMap[lo]['color'];
           drawCircle(x,lastYOffset,list[lo],c);
-          drawLine(x,lastYOffset+10,x,yOffset-10,lineYOffset,c);
+          drawLine(x,lastYOffset+12,x,yOffset-12,lineYOffset,c);
           drawCircle(x,yOffset,list[lo],c);
           arrayMap[lo]['lastY'] = yOffset;
         }
@@ -268,7 +268,7 @@ $(function(){
       var c = arrayMap[lo]['color'];
       arrayMap[hi]['color'] = c;
       drawCircle(xCalc(lo),lastYOffset,list[lo],c);
-      drawLine(xCalc(lo),lastYOffset+10,xCalc(hi),yOffset-10,lineYOffset,c);
+      drawLine(xCalc(lo),lastYOffset+12,xCalc(hi),yOffset-12,lineYOffset,c);
       incrementLYOffset();
       drawCircle(xCalc(hi),yOffset,list[lo],c);
       arrayMap[hi]['lastY'] = yOffset;
@@ -282,7 +282,7 @@ $(function(){
     
     // draw the throughline for the pivot
     var c = arrayMap[lo]['color'];
-    drawLine(xCalc(lo),currentYOffset+10,xCalc(lo),yOffset+90,lineYOffset,c);
+    drawLine(xCalc(lo),currentYOffset+12,xCalc(lo),yOffset+88,lineYOffset,c);
     drawCircle(xCalc(lo),yOffset+100,list[lo],c);
     arrayMap[lo]['lastY'] = yOffset+100;
 
@@ -306,7 +306,7 @@ $(function(){
       // if arrayMap value is less than yOffset, draw a line
       if (arrayMap[i]['lastY'] < yOffset+100) {
         var c = arrayMap[i]['color'];
-        drawLine(xCalc(i),arrayMap[i]['lastY']+10,xCalc(i),yOffset+90,lineYOffset,c);
+        drawLine(xCalc(i),arrayMap[i]['lastY']+12,xCalc(i),yOffset+88,lineYOffset,c);
         drawCircle(xCalc(i),yOffset+100,el,c);
       }
     });
