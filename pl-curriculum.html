@@ -653,5 +653,27 @@
   <p>Several books appear across phases deliberately: TAPL and ATTAPL reward re-reading as background accumulates. The same is true of Barendregt. The projects are where the material consolidates — reading without implementation leaves the understanding incomplete.</p>
 </div>
 
+
+<script>
+(function() {
+  "use strict";
+  var endpoint = "https://9fiawrlc8a.execute-api.us-west-2.amazonaws.com/prod/track";
+  var siteId = "philcrissman.github.io";
+  if (document.visibilityState === "prerender") return;
+  var data = JSON.stringify({
+    url: window.location.pathname,
+    referrer: document.referrer || null,
+    siteId: siteId
+  });
+  if (navigator.sendBeacon) {
+    navigator.sendBeacon(endpoint, data);
+  } else {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", endpoint, true);
+    xhr.setRequestHeader("Content-Type", "text/plain");
+    xhr.send(data);
+  }
+})();
+</script>
 </body>
 </html>
