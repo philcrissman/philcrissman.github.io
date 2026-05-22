@@ -49,11 +49,12 @@ $(function(){
     setTime += timing;
   };
 
-  var drawArrow = function(x1, y1, x2, y2, color){
-    var midY = Math.round((y1 + y2) / 2);
+  // lineY controls the y-coordinate of the horizontal segment of the elbow path.
+  // Each arrow gets a slightly different lineY so paths fan out and don't stack on top of each other.
+  var drawArrow = function(x1, y1, x2, y2, color, lineY){
     var path = (Math.abs(x1-x2) < 1)
       ? "M"+x1+","+y1+"L"+x2+","+y2
-      : "M"+x1+","+y1+"V"+midY+"H"+x2+"V"+y2;
+      : "M"+x1+","+y1+"V"+lineY+"H"+x2+"V"+y2;
     setTimeout(function(){
       paper.path(path).attr({"stroke-width":4,"stroke":"#f5f0e8"});
       paper.path(path).attr({"stroke-width":2,"stroke":color,"arrow-end":arrowStyle});
@@ -77,6 +78,7 @@ $(function(){
     for(var i=0;i<work.length;i++){ elColors.push(arrayMap[i].color); }
 
     var y = 50;
+    var lineYOffset;
 
     rowLabel(y, "unsorted");
     for(var i=0;i<work.length;i++){
@@ -90,6 +92,9 @@ $(function(){
       var nextWork = work.slice();
       var nextElColors = elColors.slice();
 
+      // reset the elbow offset at the start of each pass, just below the source row
+      lineYOffset = prevY + 20;
+
       (function(yy, w){
         rowLabel(yy, "merge "+w+"s");
       })(y, width);
@@ -101,10 +106,11 @@ $(function(){
         if(m >= r){
           // single subarray, no merge — pass straight through
           for(var i=l; i<=r; i++){
-            (function(ii, py, ny, c, v){
-              drawArrow(xCalc(ii), py+11, xCalc(ii), ny-11, c);
+            (function(ii, py, ny, c, v, ly){
+              drawArrow(xCalc(ii), py+11, xCalc(ii), ny-11, c, ly);
               drawCircle(xCalc(ii), ny, v, c);
-            })(i, prevY, y, elColors[i], work[i]);
+            })(i, prevY, y, elColors[i], work[i], lineYOffset);
+            lineYOffset += 5;
           }
           continue;
         }
@@ -123,32 +129,35 @@ $(function(){
           } else {
             srcIdx = m+1+ri; val = right[ri]; col = rightC[ri]; ri++;
           }
-          (function(si, di, py, ny, c, v){
-            drawArrow(xCalc(si), py+11, xCalc(di), ny-11, c);
+          (function(si, di, py, ny, c, v, ly){
+            drawArrow(xCalc(si), py+11, xCalc(di), ny-11, c, ly);
             drawCircle(xCalc(di), ny, v, c);
             nextWork[di] = v;
             nextElColors[di] = c;
-          })(srcIdx, k, prevY, y, col, val);
+          })(srcIdx, k, prevY, y, col, val, lineYOffset);
+          lineYOffset += 5;
           k++;
         }
 
         while(li < left.length){
-          (function(si, di, py, ny, c, v){
-            drawArrow(xCalc(si), py+11, xCalc(di), ny-11, c);
+          (function(si, di, py, ny, c, v, ly){
+            drawArrow(xCalc(si), py+11, xCalc(di), ny-11, c, ly);
             drawCircle(xCalc(di), ny, v, c);
             nextWork[di] = v;
             nextElColors[di] = c;
-          })(l+li, k, prevY, y, leftC[li], left[li]);
+          })(l+li, k, prevY, y, leftC[li], left[li], lineYOffset);
+          lineYOffset += 5;
           li++; k++;
         }
 
         while(ri < right.length){
-          (function(si, di, py, ny, c, v){
-            drawArrow(xCalc(si), py+11, xCalc(di), ny-11, c);
+          (function(si, di, py, ny, c, v, ly){
+            drawArrow(xCalc(si), py+11, xCalc(di), ny-11, c, ly);
             drawCircle(xCalc(di), ny, v, c);
             nextWork[di] = v;
             nextElColors[di] = c;
-          })(m+1+ri, k, prevY, y, rightC[ri], right[ri]);
+          })(m+1+ri, k, prevY, y, rightC[ri], right[ri], lineYOffset);
+          lineYOffset += 5;
           ri++; k++;
         }
       }
