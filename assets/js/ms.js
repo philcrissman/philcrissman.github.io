@@ -34,7 +34,7 @@ $(function(){
   };
 
   var arrowStyle = "classic-narrow-long";
-  var xCalc = function(i){ return 150 + 50*(i+1); };
+  var xCalc = function(i){ return 200 + 25*(i+1); };
   var rowH = 120;
 
   var drawCircle = function(x, y, label, color){
