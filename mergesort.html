@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mergesort Visualization</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap');
+
+  :root {
+    --ink: #1a1714;
+    --paper: #f5f0e8;
+    --aged: #e3dcc8;
+    --rust: #8b3a1e;
+    --slate: #3d4a5c;
+    --gold: #9a7010;
+    --muted: #7a7060;
+    --light-rule: #d5cdb8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.75;
+    padding: 2.5rem 1.2rem 5rem;
+  }
+
+  .masthead { max-width: 800px; margin: 0 auto 0.5rem; }
+  .masthead .kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 0.6rem;
+  }
+  .masthead h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.9rem, 4.5vw, 2.9rem);
+    font-weight: 700; line-height: 1.1; letter-spacing: -0.015em; margin-bottom: 0.4rem;
+  }
+  .masthead .byline { font-size: 0.82rem; color: var(--muted); font-style: italic; margin-bottom: 1.4rem; }
+  .masthead hr { border: none; border-top: 2px solid var(--ink); }
+
+  .intro {
+    max-width: 800px; margin: 1.6rem auto 0.6rem;
+    font-size: 0.9rem; color: var(--slate); columns: 2; column-gap: 2.5rem;
+  }
+  .intro p { margin-bottom: 0.7rem; }
+  @media (max-width: 600px) { .intro { columns: 1; } }
+
+  .controls {
+    max-width: 800px; margin: 1.6rem auto;
+    border-top: 1px solid var(--light-rule); padding-top: 1rem;
+  }
+
+  .controls-row {
+    display: flex; flex-wrap: wrap; align-items: baseline;
+    gap: 0.3rem 0.5rem; margin-bottom: 0.5rem;
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .controls-row strong { color: var(--ink); font-weight: 500; margin-right: 0.2rem; }
+
+  .controls-row a {
+    color: var(--slate); text-decoration: none;
+    border-bottom: 1px solid var(--light-rule);
+  }
+  .controls-row a:hover { color: var(--rust); border-color: var(--rust); }
+  .controls-row a.selected { color: var(--ink); font-weight: 500; border-color: var(--ink); }
+
+  .sep { color: var(--light-rule); }
+
+  .now-playing {
+    display: none;
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem;
+    color: var(--rust); font-style: italic;
+  }
+
+  .viz-wrap {
+    margin-top: 1.6rem;
+    overflow-x: auto;
+    border-top: 1px solid var(--light-rule);
+    padding-top: 1rem;
+  }
+
+  #container { width: 1340px; }
+
+  hr.rule { max-width: 800px; margin: 2rem auto; border: none; border-top: 1px solid var(--light-rule); }
+
+  .footnote {
+    max-width: 800px; margin: 2.5rem auto 0; font-size: 0.78rem; color: var(--muted);
+    border-top: 1px solid var(--light-rule); padding-top: 1rem; font-style: italic;
+  }
+
+  .back-link {
+    max-width: 800px; margin: 0 auto 1.6rem; display: block;
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none;
+    border-bottom: none;
+  }
+  .back-link:hover { color: var(--rust); }
+</style>
+</head>
+<body>
+
+<a class="back-link" href="index.html">← index</a>
+
+<div class="masthead">
+  <div class="kicker">Algorithm Visualization · Sorting</div>
+  <h1>Mergesort</h1>
+  <div class="byline">Bottom-up mergesort in JavaScript, visualized with Raphael.js — Philip Crissman</div>
+  <hr>
+</div>
+
+<div class="intro">
+  <p>Mergesort works by repeatedly merging sorted subarrays into larger sorted subarrays. This visualization uses the bottom-up iterative form: start with 16 individual elements (subarrays of size 1, trivially sorted), then merge adjacent pairs, then merge those results, and so on until the whole array is sorted.</p>
+  <p>Each row shows one complete pass. Each element keeps its color throughout, so you can follow any individual value as it finds its sorted position. Elements moving left during a merge cross over elements moving right — those crossings are where the interesting comparison work is happening.</p>
+</div>
+
+<div class="controls">
+  <div class="controls-row">
+    <strong>Array:</strong>
+    <div class="now-playing" id="lbl-random">Random</div>
+    <div class="now-playing" id="lbl-in-order">Sorted</div>
+    <div class="now-playing" id="lbl-reverse-sorted">Reverse Sorted</div>
+    <div id="array-links">
+      <a class="array" href="#" id="random">Random</a>
+      <span class="sep">|</span>
+      <a class="array" href="#" id="in-order">Sorted</a>
+      <span class="sep">|</span>
+      <a class="array" href="#" id="reverse-sorted">Reverse Sorted</a>
+    </div>
+  </div>
+  <div class="controls-row">
+    <strong>Speed:</strong>
+    <a class="speed" href="#" id="slower">Slower</a>
+    <span class="sep">|</span>
+    <a class="selected speed" href="#" id="default">Default</a>
+    <span class="sep">|</span>
+    <a class="speed" href="#" id="faster">Faster</a>
+  </div>
+</div>
+
+<div class="viz-wrap">
+  <div id="container">&nbsp;</div>
+</div>
+
+<hr class="rule">
+
+<div class="footnote">
+  <p>Click one of the array links above to start. Each row is one merge pass; the label on the left shows the size of subarrays being merged. On the <em>Sorted</em> input every arrow goes straight down — mergesort does the same work regardless, but no elements change position. On <em>Reverse Sorted</em> every merge is maximally out of order, producing the most crossings.</p>
+</div>
+
+<script src="assets/js/raphael-min.js"></script>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/ms.js"></script>
+
+<script>
+(function() {
+  "use strict";
+  var endpoint = "https://9fiawrlc8a.execute-api.us-west-2.amazonaws.com/prod/track";
+  var siteId = "philcrissman.github.io";
+  if (document.visibilityState === "prerender") return;
+  var data = JSON.stringify({
+    url: window.location.pathname,
+    referrer: document.referrer || null,
+    siteId: siteId
+  });
+  if (navigator.sendBeacon) {
+    navigator.sendBeacon(endpoint, data);
+  } else {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", endpoint, true);
+    xhr.setRequestHeader("Content-Type", "text/plain");
+    xhr.send(data);
+  }
+})();
+</script>
+</body>
+</html>
